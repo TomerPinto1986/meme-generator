@@ -1,3 +1,63 @@
 * {
     box-sizing: border-box;
 }
+
+
+/* Fontface */
+
+@font-face {
+    font-family: noto;
+    src: url(../fonts/NotoSansJP-Regular.otf);
+}
+
+
+/* Basic */
+
+html {
+    font-family: noto;
+}
+
+body {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    margin: 0;
+}
+
+button {
+    font-family: noto;
+    font-size: 1rem;
+    padding: 0;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+
+/* layout */
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
