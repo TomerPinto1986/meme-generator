@@ -12,7 +12,14 @@ function onInit() {
 }
 
 
+function renderMeme() {
+    const currMeme = getCurrMeme();
+    drawImg(getImgUrlFromService(currMeme.selectedImgId));
+}
+
+
 function openMemeEditor(imgId = 1) {
+    createMeme(imgId);
     const imgUrl = getImgUrlFromService(imgId);
     drawImg(imgUrl);
 }
@@ -20,16 +27,26 @@ function openMemeEditor(imgId = 1) {
 function drawText() {
     const lines = getLinesFromService();
     console.log(lines);
-    gCtx.fillStyle = `${lines[0].color}`
-    gCtx.font = `${lines[0].size}px ${lines[0].font}`
-    gCtx.textAlign = `${lines[0].align}`
-    gCtx.fillText(lines[0].txt, 100, 50)
-    gCtx.strokeText(lines[0].txt, 100, 50)
+    gCtx.fillStyle = `${lines[0].color}`;
+    console.log(lines[0].size);
+    gCtx.font = `${lines[0].size}px ${lines[0].font}`;
+    gCtx.textAlign = `${lines[0].align}`;
+    gCtx.fillText(lines[0].txt, 100, 50);
+    gCtx.strokeText(lines[0].txt, 100, 50);
+}
+
+function onSubmitChanges(ev) {
+    ev.preventDefault();
+    const elForm = ev.target;
+    const txt = elForm.querySelector('#text-input').value;
+    changeMemeTxt(txt);
+    renderMeme();
 }
 
 
 
 function drawImg(imgUrl) {
+    console.log(imgUrl);
     const img = new Image()
     img.src = imgUrl;
     img.onload = () => {

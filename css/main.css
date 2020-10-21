@@ -38,6 +38,7 @@ button {
     background-color: white;
     border: none;
     cursor: pointer;
+    color: lightgreen;
 }
 
 img {

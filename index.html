@@ -33,7 +33,12 @@
                     <canvas id="my-canvas" height="450" width="450" ontouchstart="handleStart(event)" onmousedown="handleStart(event)" ontouchmove="handleMove(event)" onmousemove="handleMove(event)"></canvas>
                 </section>
             </div>
-            <div class="control"></div>
+            <div class="control">
+                <form onsubmit="onSubmitChanges(event)">
+                    <label for="text-input">Enter text here: </label><input id="text-input" type="text" placeholder="TEXT">
+                    <button class="submit-btn">submit</button>
+                </form>
+            </div>
         </main>
         <footer>Coffe Rights</footer>
     </main>
