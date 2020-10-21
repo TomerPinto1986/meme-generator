@@ -24,12 +24,14 @@ function getImgUrlFromService(id) {
 
 function getLinesFromService(idx = 101) {
     const lines = [];
-    gCurrMeme.lines.map(line => lines.unshift(line));
+    gCurrMeme.lines.map(line => lines.push(line));
     return lines;
 }
 
-function changeMemeTxt(txt) {
-    gCurrMeme.lines.push(createNewLine(txt));
+function addMemeTxt(txt) {
+    gCurrMeme.lines.unshift(createNewLine(txt));
+    console.log(gCurrMeme.lines);
+    console.log(gCurrMeme.focusLineIdx);
 }
 
 function getCurrMeme() {
@@ -42,7 +44,8 @@ function createMeme(selectedImgId = 1) {
         idx: gNextIdx++,
         selectedImgId,
         selectedLineIdx: 0,
-        lines: []
+        lines: [],
+        focusLineIdx: 0
     }
 }
 
@@ -59,10 +62,26 @@ function createNewLine(txt) {
     }
 }
 
-function ChangeSizeFont(delta) {
-    gCurrMeme.lines[0].size += delta;
+function changeSizeFont(delta) {
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].size += delta;
 }
 
 function moveTxt(delta) {
-    gCurrMeme.lines[0].y += delta;
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].y += delta;
+}
+
+function changeFocus() {
+    gCurrMeme.focusLineIdx = gCurrMeme.focusLineIdx + 1 === gCurrMeme.lines.length ? 0 : gCurrMeme.focusLineIdx++;
+}
+
+
+function checkIfFocusOn(x, y) {
+    const lines = getLinesFromService();
+    const lineIdx = lines.findIndex(line => {
+        const txtWidth = gCtx.measureText(line.txt).width;
+        const txtHeight = line.size;
+        return (x > line.x && x < line.x + txtWidth) && (y < line.y && y > line.y - txtHeight);
+    });
+    if (lineIdx !== -1) gCurrMeme.focusLineIdx = lineIdx;
+    console.log(gCurrMeme.lines);
 }

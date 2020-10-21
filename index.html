@@ -10,27 +10,50 @@
 
 <body onload="onInit()">
     <header>
-        <div class="logo">
-            <h2>logo</h2>
+        <div class="container">
+            <div class="logo">
+                <h2>logo</h2>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="gallery">Gallery</li>
+                    <li class="about">Memes</li>
+                </ul>
+            </nav>
+
         </div>
-        <nav class="main-nav">
-            <ul>
-                <li class="gallery">Gallery</li>
-                <li class="about">About</li>
-            </ul>
-        </nav>
     </header>
-    <main class="main-container">
+    <main class="main-container container">
         <header class="filter">
-            <input type="text" class="search">
+            <label for="search-bar">Search </label><input id="search-bar" type="text" class="search">
             <h3 class="filter-options">filter opts</h3>
             <button class="more-opts">more</button>
         </header>
         <main class="main-content">
             <div class="gallery-meme">
-                <section class="gallery">Gallery</section>
+                <section class="container gallery grid">
+                    <img class="squre" src="img/1.jpg" alt="">
+                    <img class="squre" src="img/2.jpg" alt="">
+                    <img class="squre" src="img/3.jpg" alt="">
+                    <img class="squre" src="img/4.jpg" alt="">
+                    <img class="squre" src="img/5.jpg" alt="">
+                    <img class="squre" src="img/6.jpg" alt="">
+                    <img class="squre" src="img/7.jpg" alt="">
+                    <img class="squre" src="img/8.jpg" alt="">
+                    <img class="squre" src="img/9.jpg" alt="">
+                    <img class="squre" src="img/10.jpg" alt="">
+                    <img class="squre" src="img/11.jpg" alt="">
+                    <img class="squre" src="img/12.jpg" alt="">
+                    <img class="squre" src="img/13.jpg" alt="">
+                    <img class="squre" src="img/14.jpg" alt="">
+                    <img class="squre" src="img/15.jpg" alt="">
+                    <img class="squre" src="img/16.jpg" alt="">
+                    <img class="squre" src="img/17.jpg" alt="">
+                    <img class="squre" src="img/18.jpg" alt="">
+
+                </section>
                 <section class="canvas-container">
-                    <canvas id="my-canvas" height="450" width="450" ontouchstart="handleStart(event)" onmousedown="handleStart(event)" ontouchmove="handleMove(event)" onmousemove="handleMove(event)"></canvas>
+                    <canvas id="my-canvas" height="450" width="450" onmousedown="handleStart(event)" onmousemove="handleMove(event)"></canvas>
                 </section>
             </div>
             <div class="control">
@@ -42,6 +65,8 @@
                 <button class="font-size-down" onclick="onSizeChange(-2)">font-</button>
                 <button class="text-move-up" onclick="onTxtMove(-10)">up</button>
                 <button class="text-move-down" onclick="onTxtMove(10)">down</button>
+                <button class="focus-up" onclick="onChangeFocus()">focus</button>
+
             </div>
         </main>
         <footer>Coffe Rights</footer>

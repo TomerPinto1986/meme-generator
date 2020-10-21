@@ -8,7 +8,6 @@ function onInit() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     console.log('The context:', gCtx);
-    openMemeEditor();
 }
 
 
@@ -34,14 +33,13 @@ function drawText() {
         gCtx.fillText(line.txt, line.x, line.y);
         gCtx.strokeText(line.txt, line.x, line.y);
     });
-
 }
 
 function onSubmitChanges(ev) {
     ev.preventDefault();
     const elForm = ev.target;
     const txt = elForm.querySelector('#text-input').value;
-    changeMemeTxt(txt);
+    addMemeTxt(txt);
     renderMeme();
 }
 
@@ -58,12 +56,21 @@ function drawImg(imgUrl) {
 
 
 function onSizeChange(delta) {
-    ChangeSizeFont(delta);
+    changeSizeFont(delta);
     renderMeme();
 }
 
 function onTxtMove(delta) {
-    console.log('moving');
     moveTxt(delta);
     renderMeme();
+}
+
+function onChangeFocus() {
+    changeFocus();
+}
+
+
+function handleStart(ev) {
+    const { offsetX, offsetY } = ev;
+    checkIfFocusOn(offsetX, offsetY);
 }
