@@ -17,7 +17,9 @@ function renderMeme() {
 }
 
 
-function openMemeEditor(imgId = 1) {
+function openMemeEditor(imgId) {
+    document.querySelector('.main-content .gallery').style.display = 'none';
+    document.querySelector('.meme-editor').style.display = 'flex';
     createMeme(imgId);
     const imgUrl = getImgUrlFromService(imgId);
     drawImg(imgUrl);
@@ -67,6 +69,7 @@ function onTxtMove(delta) {
 
 function onChangeFocus() {
     changeFocus();
+    console.log('change focus');
 }
 
 

@@ -35,7 +35,7 @@ button {
     font-family: noto;
     font-size: 1rem;
     padding: 0;
-    background-color: white;
+    background-color: inherit;
     border: none;
     cursor: pointer;
     color: rgb(9, 179, 9);
@@ -94,6 +94,52 @@ header .main-nav ul {
 }
 
 header .main-nav li {
+    height: 80px;
+    padding: 25px;
+}
+
+.main-container .filter {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+main .meme-editor {
+    display: none;
+}
+
+.canvas-container {
+    width: fit-content;
+}
+
+main .meme-editor .control {
+    padding-inline-start: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+footer {
     height: 100px;
-    padding: 40px;
+    text-align: center;
+}
+
+
+/* componnets */
+
+body {
+    background-color: lightgray;
+}
+
+header {
+    background-color: lightgreen;
+}
+
+.filter {
+    background-color: lightgray;
+}
+
+footer {
+    background-color: lightskyblue;
+    padding-block-start: 10px;
 }
