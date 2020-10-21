@@ -29,7 +29,7 @@ function getLinesFromService(idx = 101) {
 }
 
 function changeMemeTxt(txt) {
-    gCurrMeme.lines[0].txt = txt;
+    gCurrMeme.lines.push(createNewLine(txt));
 }
 
 function getCurrMeme() {
@@ -42,12 +42,27 @@ function createMeme(selectedImgId = 1) {
         idx: gNextIdx++,
         selectedImgId,
         selectedLineIdx: 0,
-        lines: [{
-            txt: 'Start The Fun',
-            size: 50,
-            font: 'Impact',
-            align: 'left',
-            color: 'red',
-        }]
+        lines: []
     }
+}
+
+
+function createNewLine(txt) {
+    return {
+        txt: txt,
+        size: 50,
+        font: 'Impact',
+        align: 'left',
+        color: 'red',
+        x: 100,
+        y: 50,
+    }
+}
+
+function ChangeSizeFont(delta) {
+    gCurrMeme.lines[0].size += delta;
+}
+
+function moveTxt(delta) {
+    gCurrMeme.lines[0].y += delta;
 }

@@ -38,7 +38,12 @@ button {
     background-color: white;
     border: none;
     cursor: pointer;
-    color: lightgreen;
+    color: rgb(9, 179, 9);
+    outline: none;
+}
+
+button:hover {
+    color: rgb(69, 43, 140);
 }
 
 img {

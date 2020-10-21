@@ -26,13 +26,15 @@ function openMemeEditor(imgId = 1) {
 
 function drawText() {
     const lines = getLinesFromService();
-    console.log(lines);
-    gCtx.fillStyle = `${lines[0].color}`;
-    console.log(lines[0].size);
-    gCtx.font = `${lines[0].size}px ${lines[0].font}`;
-    gCtx.textAlign = `${lines[0].align}`;
-    gCtx.fillText(lines[0].txt, 100, 50);
-    gCtx.strokeText(lines[0].txt, 100, 50);
+    if (lines.length === 0) return;
+    lines.forEach(line => {
+        gCtx.fillStyle = `${line.color}`;
+        gCtx.font = `${line.size}px ${line.font}`;
+        gCtx.textAlign = `${line.align}`;
+        gCtx.fillText(line.txt, line.x, line.y);
+        gCtx.strokeText(line.txt, line.x, line.y);
+    });
+
 }
 
 function onSubmitChanges(ev) {
@@ -46,11 +48,22 @@ function onSubmitChanges(ev) {
 
 
 function drawImg(imgUrl) {
-    console.log(imgUrl);
     const img = new Image()
     img.src = imgUrl;
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
         drawText();
     }
+}
+
+
+function onSizeChange(delta) {
+    ChangeSizeFont(delta);
+    renderMeme();
+}
+
+function onTxtMove(delta) {
+    console.log('moving');
+    moveTxt(delta);
+    renderMeme();
 }
