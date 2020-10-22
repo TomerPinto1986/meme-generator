@@ -93,7 +93,12 @@ function moveTxt(delta) {
     gCurrMeme.lines[gCurrMeme.focusLineIdx].y += delta;
 }
 
-function getFocusPosition(idx) {
+function getFocusIdx() {
+    return gCurrMeme.focusLineIdx || 0;
+}
+
+function getFocusPosition() {
+    const idx = getFocusIdx()
     gCtx.font = `${gCurrMeme.lines[idx].size}px ${gCurrMeme.lines[idx].font}`;
     const focusPosition = {
         width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
@@ -108,17 +113,13 @@ function getFocusPosition(idx) {
 }
 
 function changeMemesPos(x, y) {
-    console.log(x, y);
     gCurrMeme.lines[gCurrMeme.focusLineIdx].x = x;
     gCurrMeme.lines[gCurrMeme.focusLineIdx].y = y;
 }
 
 function changeFocus() {
-
     if ((gCurrMeme.focusLineIdx + 1) === gCurrMeme.lines.length) gCurrMeme.focusLineIdx = 0;
     else gCurrMeme.focusLineIdx++;
-
-    return gCurrMeme.focusLineIdx;
 }
 
 

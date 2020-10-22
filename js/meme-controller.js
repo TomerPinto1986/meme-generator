@@ -60,9 +60,14 @@ function drawImg(imgUrl) {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
         drawText();
+        putFocus();
     }
 }
 
+function putFocus() {
+    const focusPos = getFocusPosition();
+    drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
+}
 
 function onSizeChange(delta) {
     changeSizeFont(delta);
@@ -75,12 +80,9 @@ function onTxtMove(delta) {
 }
 
 function onChangeFocus() {
-    const idx = changeFocus();
-    const focusPos = getFocusPosition(idx);
+    changeFocus();
     renderMeme();
-    setTimeout(function() {
-        drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
-    }, 10);
+
 }
 
 
@@ -91,12 +93,7 @@ function checkFocus(ev) {
     const idx = checkIfFocusOn(offsetX, offsetY);
     if (idx === -1) return;
     gIsMove = gIsMouseDown;
-    const focusPos = getFocusPosition(idx);
     renderMeme();
-    setTimeout(function() {
-        drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
-    }, 10);
-
 }
 
 function handleMove(ev) {
