@@ -19,6 +19,7 @@ function renderMeme() {
 
 function openMemeEditor(imgId) {
     document.querySelector('.main-content .gallery').style.display = 'none';
+    document.querySelector('.main-container .filter').style.display = 'none';
     document.querySelector('.meme-editor').style.display = 'flex';
     createMeme(imgId);
     const imgUrl = getImgUrlFromService(imgId);
@@ -68,12 +69,46 @@ function onTxtMove(delta) {
 }
 
 function onChangeFocus() {
-    changeFocus();
-    console.log('change focus');
+    const idx = changeFocus();
+    const focusPos = getFocusPosition(idx);
+    renderMeme();
+    setTimeout(function() {
+        drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
+    }, 100);
 }
 
 
-function handleStart(ev) {
+function checkFocus(ev) {
     const { offsetX, offsetY } = ev;
-    checkIfFocusOn(offsetX, offsetY);
+    const idx = checkIfFocusOn(offsetX, offsetY);
+    const focusPos = getFocusPosition(idx);
+    console.log(focusPos);
+    renderMeme();
+    setTimeout(function() {
+        drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
+    }, 100);
+
+}
+
+function onGalleryOpen() {
+    document.querySelector('.meme-editor').style.display = 'none';
+    document.querySelector('.main-content .gallery').style.display = 'grid';
+    document.querySelector('.main-container .filter').style.display = 'flex';
+    document.querySelector('.main-container .memes-gallery').style.display = 'none';
+
+}
+
+function onMemesOpen() {
+    document.querySelector('.meme-editor').style.display = 'none';
+    document.querySelector('.main-content .gallery').style.display = 'none';
+    document.querySelector('.main-container .filter').style.display = 'none';
+    document.querySelector('.main-container .memes-gallery').style.display = 'grid';
+
+}
+
+function drawRect(width, height, x, y) {
+    gCtx.beginPath()
+    gCtx.rect(x, y, width, -height)
+    gCtx.strokeStyle = 'black'
+    gCtx.stroke()
 }

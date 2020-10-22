@@ -42,8 +42,6 @@ function getLinesFromService(idx = 101) {
 
 function addMemeTxt(txt) {
     gCurrMeme.lines.unshift(createNewLine(txt));
-    console.log(gCurrMeme.lines);
-    console.log(gCurrMeme.focusLineIdx);
 }
 
 function getCurrMeme() {
@@ -82,12 +80,24 @@ function moveTxt(delta) {
     gCurrMeme.lines[gCurrMeme.focusLineIdx].y += delta;
 }
 
+function getFocusPosition(idx) {
+    gCtx.font = `${gCurrMeme.lines[idx].size}px ${gCurrMeme.lines[idx].font}`;
+    const focusPosition = {
+        width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
+        height: gCurrMeme.lines[idx].size,
+        startX: gCurrMeme.lines[idx].x - 5,
+        startY: gCurrMeme.lines[idx].y + 5
+    }
+    return focusPosition
+}
+
+
 function changeFocus() {
-    console.log(gCurrMeme.focusLineIdx, ' gCurrMeme.focusLineIdx');
-    console.log(gCurrMeme.lines.length, ' gCurrMeme.lines.length');
 
     if ((gCurrMeme.focusLineIdx + 1) === gCurrMeme.lines.length) gCurrMeme.focusLineIdx = 0;
     else gCurrMeme.focusLineIdx++;
+
+    return gCurrMeme.focusLineIdx;
 }
 
 
@@ -99,5 +109,5 @@ function checkIfFocusOn(x, y) {
         return (x > line.x && x < line.x + txtWidth) && (y < line.y && y > line.y - txtHeight);
     });
     if (lineIdx !== -1) gCurrMeme.focusLineIdx = lineIdx;
-    console.log(gCurrMeme.lines);
+    return lineIdx;
 }

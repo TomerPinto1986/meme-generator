@@ -50,6 +50,7 @@ img {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .squre {
@@ -104,12 +105,22 @@ header .main-nav li {
     padding: 10px;
 }
 
+.main-content {
+    padding-block-start: 10px;
+    padding-block-end: 10px;
+}
+
+.main-content .memes-gallery {
+    display: none;
+}
+
 main .meme-editor {
     display: none;
 }
 
 .canvas-container {
     width: fit-content;
+    max-height: 450px;
 }
 
 main .meme-editor .control {
@@ -121,7 +132,6 @@ main .meme-editor .control {
 
 footer {
     height: 100px;
-    text-align: center;
 }
 
 
@@ -135,11 +145,35 @@ header {
     background-color: lightgreen;
 }
 
+header li {
+    cursor: pointer;
+}
+
+.color-palete {
+    width: 25px;
+}
+
 .filter {
     background-color: lightgray;
 }
 
+canvas {
+    cursor: pointer;
+}
+
 footer {
     background-color: lightskyblue;
-    padding-block-start: 10px;
+    text-align: center;
+}
+
+@media (max-width:600px) {
+    main .meme-editor {
+        flex-direction: column;
+        align-items: center;
+    }
+    #my-canvas {
+        width: 300px;
+        height: 300px;
+        margin: auto;
+    }
 }
