@@ -63,37 +63,49 @@
                 </section>
                 <div class="control">
                     <form onsubmit="onSubmitChanges(event)">
-
-
-                        <label for="text-input">Enter text here: </label><input onkeydown="onKeyDown(event)" id="text-input" type="text" placeholder="TEXT">
-                        <label for="toggle-color"><img class="color-palete" src="icons/palette.svg"></label>
-                        <input type="color" id="toggle-color" style="visibility: hidden;">
-                        <label for="toggle-font-select">font</label><select name="" id="toggle-font-select">
-                            <option value="Ariel">Ariel</option>
-                            <option value="monospace">monospace</option>
-                            <option value="Impact">Impact</option>
-                            <option value="fantasy">fantasy</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                        </select>
-                        <button class="submit-btn">Add Line</button>
-                        <button class="delete-txt" onclick="onDeleteTxt()">delete</button>
-
+                        <input onkeydown="onKeyDown(event)" id="text-input" type="text" placeholder="Write your MEME here!">
+                        <button class="submit-btn"><img src="icons/add.png" ></button>
                     </form>
+
+                    <div class="add-delete">
+                        <button class="focus-up" onclick="onChangeFocus()"><img src="icons/focus.png" ></button>
+                        <button class="delete-txt" onclick="onDeleteTxt()"><img src="icons/delete.png" ></button>
+                    </div>
+
+                    <div class="move-btn">
+                        <button class="text-move" onclick="onTxtMove(-10)"><img src="icons/up.png" ></button>
+                        <button class="text-move" onclick="onTxtMove(10)"><img src="icons/down.png" ></button>
+                    </div>
+
+                    <select name="" id="font-select">
+                        <option value="Ariel">Ariel</option>
+                        <option value="monospace">monospace</option>
+                        <option value="Impact">Impact</option>
+                        <option value="fantasy">fantasy</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
+
+                    <div class="text-decoration">
+                        <input type="color" id="toggle-color">
+                        <label for="toggle-color"><img class="color-palete" src="icons/palette.png"></label>
+                        <button class="font-size-up" onclick="onSizeChange(2)"><img src="icons/increase font - icon.png" ></button>
+                        <button class="font-size-down" onclick="onSizeChange(-2)"><img src="icons/decrease font - icon.png" ></button>
+                        <button class="stroke" onclick="onStroke()"><img src="icons/text stroke.png" ></button>
+                    </div>
+
+
                     <div class="align">
                         <button class="rtl" onclick="onRtl()">Rtl</button>
                         <button class="rtl" onclick="onCenter()">Center</button>
                         <button class="rtl" onclick="onLtr()">Ltr</button>
                     </div>
-                    <div class="size-btn">
-                        <button class="font-size-up" onclick="onSizeChange(2)">font+</button>
-                        <button class="font-size-down" onclick="onSizeChange(-2)">font-</button>
-                    </div>
-                    <div class="move-btn">
-                        <button class="text-move-up" onclick="onTxtMove(-10)">up</button>
-                        <button class="text-move-down" onclick="onTxtMove(10)">down</button>
-                    </div>
-                    <button onclick="onStroke()">stroke</button>
-                    <button class="focus-up" onclick="onChangeFocus()">focus</button>
+
+
+
+
+
+
+
 
 
                     <a href="#" onclick="onDownloadMeme(this)" download="meme.jpg">Download</a>

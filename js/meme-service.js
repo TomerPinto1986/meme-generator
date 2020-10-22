@@ -40,8 +40,8 @@ function getLinesFromService(idx = 101) {
     return lines;
 }
 
-function addMemeTxt(txt, color, font) {
-    gCurrMeme.lines.unshift(createNewLine(txt, color, font));
+function addMemeTxt(txt) {
+    gCurrMeme.lines.unshift(createNewLine(txt));
 }
 
 function getCurrMeme() {
@@ -59,7 +59,7 @@ function createMeme(selectedImgId = 1) {
 }
 
 
-function createNewLine(txt, color, font) {
+function createNewLine(txt) {
     let posX = 0;
     let posY = 0;
     if (gCurrMeme.lines.length === 0) {
@@ -77,9 +77,9 @@ function createNewLine(txt, color, font) {
         isStroke: false,
         txt: txt,
         size: 50,
-        font,
+        font: 'Impact',
         align: 'center',
-        color,
+        color: 'white',
         x: posX,
         y: posY
     }

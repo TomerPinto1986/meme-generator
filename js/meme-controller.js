@@ -46,9 +46,7 @@ function onSubmitChanges(ev) {
     ev.preventDefault();
     const elForm = ev.target;
     const txt = elForm.querySelector('#text-input').value;
-    const color = elForm.querySelector('#toggle-color').value;
-    const font = elForm.querySelector('select').value;
-    addMemeTxt(txt, color, font);
+    addMemeTxt(txt);
     renderMeme();
 }
 
