@@ -6,5 +6,6 @@ function saveToStorage(key, val) {
 
 function loadFromStorage(key) {
     const val = localStorage.getItem(key)
+    console.log(val);
     return JSON.parse(val)
 }

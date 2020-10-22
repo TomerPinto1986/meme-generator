@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body onload="onInit()">
+<body onload="onInit()" onmouseup="handleMouseUp()">
     <header>
         <div class="container">
             <div class="logo">
@@ -65,7 +65,7 @@
                     <form onsubmit="onSubmitChanges(event)">
 
 
-                        <label for="text-input">Enter text here: </label><input id="text-input" type="text" placeholder="TEXT">
+                        <label for="text-input">Enter text here: </label><input onkeydown="onKeyDown(event)" id="text-input" type="text" placeholder="TEXT">
                         <label for="toggle-color"><img class="color-palete" src="icons/palette.svg"></label>
                         <input type="color" id="toggle-color" style="visibility: hidden;">
                         <label for="toggle-font-select">font</label><select name="" id="toggle-font-select">
@@ -76,7 +76,7 @@
                             <option value="Times New Roman">Times New Roman</option>
                         </select>
                         <button class="submit-btn">Add Line</button>
-
+                        <button class="delete-txt" onclick="onDeleteTxt()">delete</button>
 
                     </form>
                     <div class="align">
@@ -94,8 +94,10 @@
                     </div>
                     <button onclick="onStroke()">stroke</button>
                     <button class="focus-up" onclick="onChangeFocus()">focus</button>
-                    <button class="delete-txt" onclick="onDeleteTxt()">delete</button>
 
+
+                    <a href="#" onclick="onDownloadMeme(this)" download="meme.jpg">Download</a>
+                    <a href="#" onclick="onSaveMeme(this)">SaveMeme</a>
                 </div>
             </main>
         </main>
@@ -105,6 +107,7 @@
 
 
 
+    <script src="js/storage-service.js"></script>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
 </body>

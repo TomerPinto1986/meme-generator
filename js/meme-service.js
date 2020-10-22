@@ -1,8 +1,7 @@
 'use strict';
-
 console.log('hello service!');
 
-var gNextIdx = 101;
+const MEMES_KEY = 'memes';
 const gImgs = [
     { id: 1, url: './img/1.jpg' },
     { id: 2, url: './img/2.jpg' },
@@ -24,8 +23,9 @@ const gImgs = [
     { id: 18, url: './img/18.jpg' },
 ]
 
-const gMemes = [];
+const gMemes = loadFromStorage(MEMES_KEY);
 var gCurrMeme = {};
+var gNextIdx = 101;
 
 
 function getImgUrlFromService(id) {
@@ -107,6 +107,11 @@ function getFocusPosition(idx) {
     return focusPosition
 }
 
+function changeMemesPos(x, y) {
+    console.log(x, y);
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].x = x;
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].y = y;
+}
 
 function changeFocus() {
 
@@ -139,4 +144,17 @@ function changeTxtAlign(align) {
 
 function strokeTxt() {
     gCurrMeme.lines[gCurrMeme.focusLineIdx].isStroke = !gCurrMeme.lines[gCurrMeme.focusLineIdx].isStroke;
+}
+
+function saveMeme(imgData) {
+    gMemes.push(imgData);
+    saveToStorage(MEMES_KEY, gMemes);
+}
+
+function loadMemes() {
+    return gMemes;
+}
+
+function getTxtOnFocus() {
+    return gCurrMeme.lines[gCurrMeme.focusLineIdx].txt;
 }

@@ -3,6 +3,8 @@
 console.log('hello controller!');
 var gCanvas;
 var gCtx;
+var gIsMouseDown = false;
+var gIsMove = false;
 
 function onInit() {
     gCanvas = document.querySelector('#my-canvas');
@@ -36,7 +38,8 @@ function drawText() {
         gCtx.fillText(line.txt, line.x, line.y);
         if (line.isStroke) gCtx.strokeText(line.txt, line.x, line.y);
     });
-
+    const focusTxt = getTxtOnFocus();
+    document.querySelector('#text-input').value = focusTxt;
 }
 
 function onSubmitChanges(ev) {
@@ -77,19 +80,34 @@ function onChangeFocus() {
     renderMeme();
     setTimeout(function() {
         drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
-    }, 100);
+    }, 10);
 }
 
 
 function checkFocus(ev) {
+    gIsMouseDown = true;
+    console.log('mousedown?: ', gIsMouseDown);
     const { offsetX, offsetY } = ev;
     const idx = checkIfFocusOn(offsetX, offsetY);
+    if (idx === -1) return;
+    gIsMove = gIsMouseDown;
     const focusPos = getFocusPosition(idx);
     renderMeme();
     setTimeout(function() {
         drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
-    }, 100);
+    }, 10);
 
+}
+
+function handleMove(ev) {
+    if (!gIsMove) return;
+    changeMemesPos(ev.offsetX, ev.offsetY);
+    renderMeme();
+}
+
+function handleMouseUp() {
+    gIsMouseDown = false;
+    gIsMove = false;
 }
 
 function onGalleryOpen() {
@@ -104,8 +122,15 @@ function onMemesOpen() {
     document.querySelector('.meme-editor').style.display = 'none';
     document.querySelector('.main-content .gallery').style.display = 'none';
     document.querySelector('.main-container .filter').style.display = 'none';
-    document.querySelector('.main-container .memes-gallery').style.display = 'grid';
-
+    const elGallery = document.querySelector('.main-container .memes-gallery');
+    elGallery.style.display = 'grid';
+    const memes = loadMemes();
+    elGallery.innerHTML = '';
+    memes.forEach(meme => {
+        var image = new Image();
+        image.src = meme;
+        elGallery.appendChild(image);
+    });
 }
 
 function drawRect(width, height, x, y) {
@@ -124,6 +149,29 @@ function onStroke() {
     strokeTxt();
     renderMeme();
 }
+
+function onDownloadMeme(elLink) {
+    const data = gCanvas.toDataURL()
+    elLink.href = data
+    elLink.download = 'meme.jpg'
+}
+
+
+function onSaveMeme(elLink) {
+    const imgData = gCanvas.toDataURL('image/png');
+    saveMeme(imgData)
+}
+
+
+
+function onKeyDown(ev) {
+    console.log(ev.key);
+}
+
+
+
+
+
 
 // function onRtl() {
 //     changeTxtAlign('left');
