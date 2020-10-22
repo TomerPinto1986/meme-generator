@@ -1,16 +1,28 @@
 'use strict';
-
 console.log('hello controller!');
+
+
 var gCanvas;
 var gCtx;
 var gIsMouseDown = false;
 var gIsMove = false;
+var gSearchTxt = '';
+
 
 function onInit() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
+    renderImgs();
 }
 
+function renderImgs() {
+    const imgs = getFilteredImgs(gSearchTxt);
+    var strHtml = '';
+    imgs.forEach((img, idx) => {
+        strHtml += `<img class="squre" src="${img.url}" onclick="openMemeEditor(${idx+1})">`
+    });
+    document.querySelector('.gallery').innerHTML = strHtml;
+}
 
 function renderMeme() {
     const currMeme = getCurrMeme();
@@ -93,7 +105,6 @@ function onChangeFocus() {
 
 function checkFocus(ev) {
     gIsMouseDown = true;
-    console.log('mousedown?: ', gIsMouseDown);
     const { offsetX, offsetY } = ev;
     const idx = checkIfFocusOn(offsetX, offsetY);
     if (idx === -1) return;
@@ -119,6 +130,14 @@ function onGalleryOpen() {
     document.querySelector('.main-container .memes-gallery').style.display = 'none';
 
 }
+
+function onSearch(ev) {
+    console.log(ev.key);
+    gSearchTxt = document.querySelector('.filter .search').value + ev.key;
+    renderImgs();
+}
+
+
 
 function onMemesOpen() {
     document.querySelector('.meme-editor').style.display = 'none';

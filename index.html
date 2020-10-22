@@ -16,7 +16,7 @@
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li class="gallery" onclick="onGalleryOpen()">Gallery</li>
+                    <li class="gallery-nav" onclick="onGalleryOpen()">Gallery</li>
                     <li class="about" onclick="onMemesOpen()">Memes</li>
                 </ul>
             </nav>
@@ -25,7 +25,7 @@
     <main class="main-container">
         <header class="filter">
             <section class="search-container">
-                <label for="search-bar">Search </label><input id="search-bar" type="text" class="search">
+                <label for="search-bar">Search </label><input onkeydown="onSearch(event)" id="search-bar" type="text" class="search">
             </section>
             <h3 class="filter-options">filter opts</h3>
             <button class="more-opts">more</button>
@@ -33,7 +33,7 @@
         <main class="main-content">
             <div class="gallerys">
                 <section class="container gallery grid">
-                    <img class="squre" src="img/1.jpg" onclick="openMemeEditor(1)">
+                    <!-- <img class="squre" src="img/1.jpg" onclick="openMemeEditor(1)">
                     <img class="squre" src="img/2.jpg" onclick="openMemeEditor(2)">
                     <img class="squre" src="img/3.jpg" onclick="openMemeEditor(3)">
                     <img class="squre" src="img/4.jpg" onclick="openMemeEditor(4)">
@@ -50,7 +50,7 @@
                     <img class="squre" src="img/15.jpg" onclick="openMemeEditor(15)">
                     <img class="squre" src="img/16.jpg" onclick="openMemeEditor(16)">
                     <img class="squre" src="img/17.jpg" onclick="openMemeEditor(17)">
-                    <img class="squre" src="img/18.jpg" onclick="openMemeEditor(18)">
+                    <img class="squre" src="img/18.jpg" onclick="openMemeEditor(18)"> -->
 
                 </section>
                 <section class="container memes-gallery grid">
