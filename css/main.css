@@ -1,243 +1,284 @@
-        * {
-        box-sizing: border-box;
-    }
-    /* Fontface */
-    
-    @font-face {
-        font-family: noto;
-        src: url(../fonts/NotoSansJP-Regular.otf);
-    }
-    /* Basic */
-    
-    html {
-        font-family: noto;
-    }
-    
-    body {
-        margin: 0;
-    }
-    
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-weight: normal;
-        margin: 0;
-    }
-    
-    button {
-        font-family: noto;
-        font-size: 1rem;
-        padding: 0;
-        background-color: inherit;
-        border: none;
-        cursor: pointer;
-        color: rgb(9, 179, 9);
-        outline: none;
-    }
-    
-    button:hover {
-        color: rgb(69, 43, 140);
-    }
-    
-    img {
-        border-radius: 10px;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: cover;
-        cursor: pointer;
-    }
-    
-    .squre {
-        grid-column: span 1;
-        grid-row: span 1;
-    }
-    
-    a {
-        text-decoration: none;
-        color: black;
-    }
-    
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-    /* layout */
-    
-    .container {
-        max-width: 980px;
-        margin: 0 auto;
-    }
-    
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        grid-gap: 10px;
-    }
-    
-    .header-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    header .main-nav ul {
-        display: flex;
-        margin: 0;
-        align-items: center;
-    }
-    
-    header .main-nav li {
-        padding-inline-end: 10px;
-        padding-inline-start: 10px;
-    }
-    
-    .main-container .filter {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 20px;
-    }
-    
-    .main-content {
-        padding-block-start: 10px;
-        padding-block-end: 10px;
-    }
-    
-    .main-content .memes-gallery {
-        display: none;
-    }
-    
+* {
+    box-sizing: border-box;
+}
+
+
+/* Fontface */
+
+@font-face {
+    font-family: noto;
+    src: url(../fonts/NotoSansJP-Regular.otf);
+}
+
+
+/* Basic */
+
+html {
+    font-family: noto;
+}
+
+body {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    margin: 0;
+}
+
+button {
+    font-family: noto;
+    font-size: 1rem;
+    padding: 0;
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+    color: rgb(9, 179, 9);
+    outline: none;
+}
+
+button:hover {
+    color: rgb(69, 43, 140);
+}
+
+img {
+    border-radius: 10px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.squre {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+
+/* layout */
+
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 10px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .main-nav ul {
+    display: flex;
+    margin: 0;
+    align-items: center;
+}
+
+header .main-nav li {
+    padding-inline-end: 10px;
+    padding-inline-start: 10px;
+}
+
+.main-container .filter {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.main-content {
+    padding-block-start: 10px;
+    padding-block-end: 10px;
+}
+
+.main-content .memes-gallery {
+    display: none;
+}
+
+main .meme-editor {
+    display: none;
+}
+
+.canvas-container {
+    width: fit-content;
+    max-height: 450px;
+}
+
+main .meme-editor .control {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 1px solid;
+    margin-inline-start: 80px;
+    padding: 30px;
+    background-color: #fff;
+}
+
+footer {
+    height: 90px;
+}
+
+
+/* componnets */
+
+body {
+    background-color: #e3e3e3;
+}
+
+header {
+    background-color: #ff7f00;
+}
+
+header li {
+    cursor: pointer;
+    color: #ffffff;
+    height: 70px;
+    line-height: 4;
+    transition: 0.3s;
+}
+
+header li:hover {
+    color: #000;
+    border-bottom: 3px outset #000000;
+}
+
+.filter input {
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.filter input:focus {
+    outline: none;
+}
+
+#toggle-color {
+    opacity: 0;
+    position: relative;
+    top: -2px;
+}
+
+.text-decoration {
+    display: flex;
+    justify-content: space-between;
+}
+
+.control form.text {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+.submit-btn {
+    margin-top: 10px;
+}
+
+.move-btn {
+    display: flex;
+    justify-content: space-around;
+}
+
+.text-move {
+    width: 40px;
+}
+
+.align,
+.font-size-up,
+.font-size-down,
+.color-palete,
+.stroke {
+    width: 30px;
+}
+
+.align {
+    display: flex;
+    justify-content: center;
+    width: 100px;
+}
+
+.color-palete {
+    position: relative;
+    top: 10px;
+    right: 20px;
+}
+
+.text-decoration>* {
+    margin: 5px;
+}
+
+.filter {
+    background-color: #fff;
+}
+
+#text-input,
+#font-select {
+    padding: 10px;
+    border-radius: 15px;
+    outline: none;
+}
+
+.add-delete {
+    display: flex;
+    justify-content: space-between;
+}
+
+.download-save {
+    display: flex;
+    justify-content: space-around;
+}
+
+form.font-color {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+form.font-color img {
+    width: 40px;
+}
+
+canvas {
+    cursor: pointer;
+}
+
+footer {
+    background-color: #ff7f00;
+    text-align: center;
+}
+
+@media (max-width:600px) {
     main .meme-editor {
-        display: none;
+        flex-direction: column;
+        align-items: center;
     }
-    
-    .canvas-container {
-        width: fit-content;
-        max-height: 450px;
+    #my-canvas {
+        width: 300px;
+        height: 300px;
+        margin: auto;
     }
-    
     main .meme-editor .control {
-        position: relative;
-        padding-inline-start: 80px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
+        padding-inline-start: 0px;
+        margin: 0;
     }
-    
-    footer {
-        height: 100px;
-    }
-    /* componnets */
-    
-    body {
-        background-color: #e3e3e3;
-    }
-    
-    header {
-        background-color: #ff7f00;
-    }
-    
-    header li {
-        cursor: pointer;
-        color: #ffffff;
-        height: 70px;
-        line-height: 4;
-        transition: 0.3s;
-    }
-    
-    header li:hover {
-        color: #000;
-        border-bottom: 3px outset #000000;
-    }
-    
-    .filter input {
-        border: none;
-        border-bottom: 1px solid black;
-    }
-    
-    .filter input:focus {
-        outline: none;
-    }
-    
-    #toggle-color {
-        opacity: 0;
-        position: relative;
-        top: -2px;
-    }
-    
-    .text-decoration {
-        display: flex;
-    }
-    
-    .control form {
-        display: flex;
-        flex-direction: column;
-        align-self: center;
-    }
-    
-    .submit-btn {
-        margin-top: 10px;
-    }
-    
-    .move-btn {
-        display: flex;
-        justify-content: space-around;
-    }
-    
-    .text-move {
-        width: 40px;
-    }
-    
-    .font-size-up,
-    .font-size-down,
-    .color-palete,
-    .stroke {
-        width: 30px;
-    }
-    
-    .text-decoration>* {
-        margin: 5px;
-    }
-    
-    .filter {
-        background-color: #fff;
-    }
-    
-    #text-input,
-    #font-select {
-        padding: 10px;
-        border-radius: 15px;
-        outline: none;
-        border: none;
-    }
-    
-    .add-delete {
-        display: flex;
-        justify-content: space-between;
-        /* width: 100%; */
-    }
-    
-    canvas {
-        cursor: pointer;
-    }
-    
-    footer {
-        background-color: #ff7f00;
-        text-align: center;
-    }
-    
-    @media (max-width:600px) {
-        main .meme-editor {
-            flex-direction: column;
-            align-items: center;
-        }
-        #my-canvas {
-            width: 300px;
-            height: 300px;
-            margin: auto;
-        }
-        main .meme-editor .control {
-            padding-inline-start: 0px;
-        }
+}

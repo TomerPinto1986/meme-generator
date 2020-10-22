@@ -62,7 +62,7 @@
                     <canvas id="my-canvas" height="450" width="450" onmousedown="checkFocus(event)" onmousemove="handleMove(event)"></canvas>
                 </section>
                 <div class="control">
-                    <form onsubmit="onSubmitChanges(event)">
+                    <form class="text" onsubmit="onSubmitChanges(event)">
                         <input onkeydown="onKeyDown(event)" id="text-input" type="text" placeholder="Write your MEME here!">
                         <button class="submit-btn"><img src="icons/add.png" ></button>
                     </form>
@@ -76,40 +76,38 @@
                         <button class="text-move" onclick="onTxtMove(-10)"><img src="icons/up.png" ></button>
                         <button class="text-move" onclick="onTxtMove(10)"><img src="icons/down.png" ></button>
                     </div>
-
-                    <select name="" id="font-select">
-                        <option value="Ariel">Ariel</option>
-                        <option value="monospace">monospace</option>
-                        <option value="Impact">Impact</option>
-                        <option value="fantasy">fantasy</option>
-                        <option value="Times New Roman">Times New Roman</option>
-                    </select>
-
-                    <div class="text-decoration">
+                    <form onsubmit="onColorFontSubmit(event)" class="font-color">
                         <input type="color" id="toggle-color">
                         <label for="toggle-color"><img class="color-palete" src="icons/palette.png"></label>
+                        <select name="" id="font-select">
+                            <option value="Ariel">Ariel</option>
+                            <option value="monospace">monospace</option>
+                            <option value="Impact">Impact</option>
+                            <option value="fantasy">fantasy</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                        </select>
+                        <button><img src="icons/thumbup.png" alt=""></button>
+                    </form>
+
+                    <div class="text-decoration">
                         <button class="font-size-up" onclick="onSizeChange(2)"><img src="icons/increase font - icon.png" ></button>
                         <button class="font-size-down" onclick="onSizeChange(-2)"><img src="icons/decrease font - icon.png" ></button>
                         <button class="stroke" onclick="onStroke()"><img src="icons/text stroke.png" ></button>
                     </div>
 
 
-                    <div class="align">
-                        <button class="rtl" onclick="onRtl()">Rtl</button>
-                        <button class="rtl" onclick="onCenter()">Center</button>
-                        <button class="rtl" onclick="onLtr()">Ltr</button>
+                    <!-- <div class="align">
+                        <button class="rtl" onclick="onRtl()"><img src="icons/align-to-right.png" alt=""></button>
+                        <button class="rtl" onclick="onCenter()"><img src="icons/center-text-alignment.png" alt=""></button>
+                        <button class="rtl" onclick="onLtr()"><img src="icons/align-to-left.png" alt=""></button>
+                    </div> -->
+
+
+                    <div class="download-save">
+                        <a href="#" onclick="onDownloadMeme(this)" download="meme.jpg">Download</a>
+                        <a href="#" onclick="onSaveMeme(this)">SaveMeme</a>
                     </div>
 
-
-
-
-
-
-
-
-
-                    <a href="#" onclick="onDownloadMeme(this)" download="meme.jpg">Download</a>
-                    <a href="#" onclick="onSaveMeme(this)">SaveMeme</a>
                 </div>
             </main>
         </main>

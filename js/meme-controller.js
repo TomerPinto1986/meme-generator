@@ -9,7 +9,6 @@ var gIsMove = false;
 function onInit() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
-    console.log('The context:', gCtx);
 }
 
 
@@ -47,6 +46,14 @@ function onSubmitChanges(ev) {
     const elForm = ev.target;
     const txt = elForm.querySelector('#text-input').value;
     addMemeTxt(txt);
+    renderMeme();
+}
+
+function onColorFontSubmit(ev) {
+    ev.preventDefault();
+    const color = document.querySelector('#toggle-color').value;
+    const font = document.querySelector('#font-select').value;
+    changeMemeFontColor(color, font);
     renderMeme();
 }
 

@@ -78,7 +78,7 @@ function createNewLine(txt) {
         txt: txt,
         size: 50,
         font: 'Impact',
-        align: 'center',
+        align: 'left',
         color: 'white',
         x: posX,
         y: posY
@@ -108,7 +108,7 @@ function getFocusPosition() {
     }
     if (gCurrMeme.lines[idx].align === 'center') {
         focusPosition.startX = focusPosition.startX - (0.5 * focusPosition.width) + 5;
-    } else if (gCurrMeme.lines[idx].align === 'left') focusPosition.startX = focusPosition.startX - (focusPosition.width) + 5;
+    } else if (gCurrMeme.lines[idx].align === 'right') focusPosition.startX = focusPosition.startX - (focusPosition.width) + 5;
     return focusPosition
 }
 
@@ -158,4 +158,10 @@ function loadMemes() {
 
 function getTxtOnFocus() {
     return gCurrMeme.lines[gCurrMeme.focusLineIdx].txt;
+}
+
+function changeMemeFontColor(color, font) {
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].color = color;
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].font = font;
+
 }
