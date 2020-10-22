@@ -40,8 +40,8 @@ function getLinesFromService(idx = 101) {
     return lines;
 }
 
-function addMemeTxt(txt) {
-    gCurrMeme.lines.unshift(createNewLine(txt));
+function addMemeTxt(txt, color, font) {
+    gCurrMeme.lines.unshift(createNewLine(txt, color, font));
 }
 
 function getCurrMeme() {
@@ -53,22 +53,35 @@ function createMeme(selectedImgId = 1) {
     gCurrMeme = {
         idx: gNextIdx++,
         selectedImgId,
-        selectedLineIdx: 0,
         lines: [],
         focusLineIdx: 0
     }
 }
 
 
-function createNewLine(txt) {
+function createNewLine(txt, color, font) {
+    let posX = 0;
+    let posY = 0;
+    if (gCurrMeme.lines.length === 0) {
+        posX = 200;
+        posY = 50;
+    } else if (gCurrMeme.lines.length === 1) {
+        posX = 200;
+        posY = 425;
+    } else {
+        posX = 200;
+        posY = 250;
+    }
+
     return {
+        isStroke: false,
         txt: txt,
         size: 50,
-        font: 'Impact',
-        align: 'left',
-        color: 'red',
-        x: 100,
-        y: 50,
+        font,
+        align: 'center',
+        color,
+        x: posX,
+        y: posY
     }
 }
 
@@ -88,6 +101,9 @@ function getFocusPosition(idx) {
         startX: gCurrMeme.lines[idx].x - 5,
         startY: gCurrMeme.lines[idx].y + 5
     }
+    if (gCurrMeme.lines[idx].align === 'center') {
+        focusPosition.startX = focusPosition.startX - (0.5 * focusPosition.width) + 5;
+    } else if (gCurrMeme.lines[idx].align === 'left') focusPosition.startX = focusPosition.startX - (focusPosition.width) + 5;
     return focusPosition
 }
 
@@ -110,4 +126,17 @@ function checkIfFocusOn(x, y) {
     });
     if (lineIdx !== -1) gCurrMeme.focusLineIdx = lineIdx;
     return lineIdx;
+}
+
+function deletetxt() {
+    gCurrMeme.lines.splice(gCurrMeme.focusLineIdx, 1);
+}
+
+
+function changeTxtAlign(align) {
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].align = align;
+}
+
+function strokeTxt() {
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].isStroke = !gCurrMeme.lines[gCurrMeme.focusLineIdx].isStroke;
 }

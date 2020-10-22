@@ -34,15 +34,18 @@ function drawText() {
         gCtx.font = `${line.size}px ${line.font}`;
         gCtx.textAlign = `${line.align}`;
         gCtx.fillText(line.txt, line.x, line.y);
-        gCtx.strokeText(line.txt, line.x, line.y);
+        if (line.isStroke) gCtx.strokeText(line.txt, line.x, line.y);
     });
+
 }
 
 function onSubmitChanges(ev) {
     ev.preventDefault();
     const elForm = ev.target;
     const txt = elForm.querySelector('#text-input').value;
-    addMemeTxt(txt);
+    const color = elForm.querySelector('#toggle-color').value;
+    const font = elForm.querySelector('select').value;
+    addMemeTxt(txt, color, font);
     renderMeme();
 }
 
@@ -82,7 +85,6 @@ function checkFocus(ev) {
     const { offsetX, offsetY } = ev;
     const idx = checkIfFocusOn(offsetX, offsetY);
     const focusPos = getFocusPosition(idx);
-    console.log(focusPos);
     renderMeme();
     setTimeout(function() {
         drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
@@ -112,3 +114,28 @@ function drawRect(width, height, x, y) {
     gCtx.strokeStyle = 'black'
     gCtx.stroke()
 }
+
+function onDeleteTxt() {
+    deletetxt();
+    renderMeme();
+}
+
+function onStroke() {
+    strokeTxt();
+    renderMeme();
+}
+
+// function onRtl() {
+//     changeTxtAlign('left');
+//     renderMeme();
+// }
+
+// function onCenter() {
+//     changeTxtAlign('center');
+//     renderMeme();
+// }
+
+// function onLtr() {
+//     changeTxtAlign('right');
+//     renderMeme();
+// }

@@ -63,6 +63,8 @@
                 </section>
                 <div class="control">
                     <form onsubmit="onSubmitChanges(event)">
+
+
                         <label for="text-input">Enter text here: </label><input id="text-input" type="text" placeholder="TEXT">
                         <label for="toggle-color"><img class="color-palete" src="icons/palette.svg"></label>
                         <input type="color" id="toggle-color" style="visibility: hidden;">
@@ -73,7 +75,9 @@
                             <option value="fantasy">fantasy</option>
                             <option value="Times New Roman">Times New Roman</option>
                         </select>
-                        <button class="submit-btn">submit</button>
+                        <button class="submit-btn">Add Line</button>
+
+
                     </form>
                     <div class="align">
                         <button class="rtl" onclick="onRtl()">Rtl</button>
@@ -88,6 +92,7 @@
                         <button class="text-move-up" onclick="onTxtMove(-10)">up</button>
                         <button class="text-move-down" onclick="onTxtMove(10)">down</button>
                     </div>
+                    <button onclick="onStroke()">stroke</button>
                     <button class="focus-up" onclick="onChangeFocus()">focus</button>
                     <button class="delete-txt" onclick="onDeleteTxt()">delete</button>
 
