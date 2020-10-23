@@ -7,6 +7,7 @@ var gCtx;
 var gIsMouseDown = false;
 var gIsMove = false;
 var gSearchTxt = '';
+// var gIsSubmit = false;
 
 
 function onInit() {
@@ -53,10 +54,20 @@ function drawText() {
     document.querySelector('#text-input').value = focusTxt;
 }
 
-function onSubmitChanges(ev) {
+function onSubmitChanges() {
+    if (addNewLine() === -1) return;
+    renderMeme();
+}
+
+function onKeyDown(ev) {
     ev.preventDefault();
-    const elForm = ev.target;
-    const txt = elForm.querySelector('#text-input').value;
+    if (ev.key === 'Backspace') {
+        deleteLetter();
+        renderMeme();
+        return;
+    }
+    if (ev.key.length > 1) return;
+    const txt = ev.key;
     addMemeTxt(txt);
     renderMeme();
 }
@@ -83,6 +94,7 @@ function drawImg(imgUrl) {
 
 function putFocus() {
     const focusPos = getFocusPosition();
+    if (focusPos === -1) return;
     drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
 }
 
@@ -132,7 +144,14 @@ function onGalleryOpen() {
 }
 
 function onSearch(ev) {
-    console.log(ev.key);
+    if (ev.key === 'Backspace') {
+        gSearchTxt = gSearchTxt.substring(0, gSearchTxt.length - 1);
+        renderImgs();
+        return;
+    } else if (ev.key === 'Enter') {
+        addSearchWord(gSearchTxt);
+        return;
+    } else if (ev.key.length > 1) return;
     gSearchTxt = document.querySelector('.filter .search').value + ev.key;
     renderImgs();
 }
@@ -185,9 +204,7 @@ function onSaveMeme(elLink) {
 
 
 
-function onKeyDown(ev) {
-    console.log(ev.key);
-}
+
 
 
 

@@ -62,20 +62,21 @@
                     <canvas id="my-canvas" height="450" width="450" onmousedown="checkFocus(event)" onmousemove="handleMove(event)"></canvas>
                 </section>
                 <div class="control">
-                    <form class="text" onsubmit="onSubmitChanges(event)">
+                    <form class="text">
                         <input onkeydown="onKeyDown(event)" id="text-input" type="text" placeholder="Write your MEME here!">
-                        <button class="submit-btn"><img src="icons/add.png" ></button>
                     </form>
 
                     <div class="add-delete">
                         <button class="focus-up" onclick="onChangeFocus()"><img src="icons/focus.png" ></button>
+                        <button class="submit-btn" onclick="onSubmitChanges()"><img src="icons/add.png" ></button>
                         <button class="delete-txt" onclick="onDeleteTxt()"><img src="icons/delete.png" ></button>
                     </div>
 
-                    <div class="move-btn">
+                    <!-- <div class="move-btn">
                         <button class="text-move" onclick="onTxtMove(-10)"><img src="icons/up.png" ></button>
                         <button class="text-move" onclick="onTxtMove(10)"><img src="icons/down.png" ></button>
-                    </div>
+                    </div> -->
+
                     <form onsubmit="onColorFontSubmit(event)" class="font-color">
                         <input type="color" id="toggle-color">
                         <label for="toggle-color"><img class="color-palete" src="icons/palette.png"></label>

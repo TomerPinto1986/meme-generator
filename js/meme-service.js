@@ -2,6 +2,10 @@
 console.log('hello service!');
 
 const MEMES_KEY = 'memes';
+const KEYWORDS_KEY = 'keywords'
+const gMemes = loadFromStorage(MEMES_KEY);
+var gKeywords = {};
+
 const gImgs = [
     { id: 1, url: './img/1.jpg', keywords: ['leader', 'politics', 'america', 'determine', 'blonde', 'hair', 'suit', 'poining'] },
     { id: 2, url: './img/2.jpg', keywords: ['dogs', 'animels', 'pupies', 'cute', 'sweet'] },
@@ -23,7 +27,6 @@ const gImgs = [
     { id: 18, url: './img/18.jpg', keywords: ['movie', 'toy', 'baby'] },
 ]
 
-const gMemes = loadFromStorage(MEMES_KEY);
 var gCurrMeme = {};
 var gNextIdx = 101;
 
@@ -35,8 +38,12 @@ function getImgUrlFromService(id) {
 
 function getFilteredImgs(searchTxt) {
     if (searchTxt === '') return gImgs;
+    var imgs = [];
     console.log(searchTxt);
-    var imgs = gImgs.filter(img => img.keywords.includes(searchTxt));
+    gImgs.forEach(img => {
+        var idx = img.keywords.findIndex(keyword => keyword.includes(searchTxt))
+        if (idx !== -1) imgs.push(img);
+    });
     return imgs;
 }
 
@@ -52,7 +59,18 @@ function getLinesFromService(idx = 101) {
 }
 
 function addMemeTxt(txt) {
-    gCurrMeme.lines.unshift(createNewLine(txt));
+    if (!(gCurrMeme.lines[gCurrMeme.focusLineIdx])) {
+        console.log('first letter');
+        gCurrMeme.lines.unshift(createNewLine(txt));
+    } else {
+        gCurrMeme.lines[gCurrMeme.focusLineIdx].txt += txt;
+    }
+}
+
+function addNewLine() {
+    if ((!gCurrMeme.lines[gCurrMeme.focusLineIdx]) || (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === '')) return -1;
+    gCurrMeme.focusLineIdx++;
+    gCurrMeme.lines[gCurrMeme.focusLineIdx] = createNewLine('');
 }
 
 function getCurrMeme() {
@@ -67,6 +85,19 @@ function createMeme(selectedImgId = 1) {
         lines: [],
         focusLineIdx: 0
     }
+}
+
+function deleteLetter() {
+    if ((gCurrMeme.lines[gCurrMeme.focusLineIdx].txt.length === 0) || !(gCurrMeme.lines[gCurrMeme.focusLineIdx].txt)) return
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].txt = gCurrMeme.lines[gCurrMeme.focusLineIdx].txt.slice(0, -1);
+}
+
+function addSearchWord(keyword) {
+    if (getFilteredImgs(keyword).length === 0) return;
+    if (!gKeywords[keyword]) {
+        gKeywords[keyword] = 1;
+    } else gKeywords[keyword]++;
+    saveToStorage(KEYWORDS_KEY, gKeywords);
 }
 
 
@@ -110,6 +141,7 @@ function getFocusIdx() {
 
 function getFocusPosition() {
     const idx = getFocusIdx()
+    if (gCurrMeme.lines.length === 0) return -1;
     gCtx.font = `${gCurrMeme.lines[idx].size}px ${gCurrMeme.lines[idx].font}`;
     const focusPosition = {
         width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
