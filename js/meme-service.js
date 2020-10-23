@@ -117,14 +117,14 @@ function createNewLine(txt) {
     let posX = 0;
     let posY = 0;
     if (gCurrMeme.lines.length === 0) {
-        posX = 200;
-        posY = 50;
+        posX = 170;
+        posY = 70;
     } else if (gCurrMeme.lines.length === 1) {
-        posX = 200;
-        posY = 425;
+        posX = 170;
+        posY = 420;
     } else {
-        posX = 200;
-        posY = 250;
+        posX = 170;
+        posY = 240;
     }
 
     return {
@@ -153,7 +153,6 @@ function getFocusIdx() {
 
 function getFocusPosition() {
     const idx = getFocusIdx()
-    console.log('line focus idx: ', idx);
     if (gCurrMeme.lines.length === 0) return -1;
     const focusPosition = {
         width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
@@ -183,6 +182,8 @@ function checkIfFocusOn(x, y) {
     const lineIdx = lines.findIndex(line => {
         const txtWidth = gCtx.measureText(line.txt).width;
         const txtHeight = line.size;
+        console.log('current x y: ', x, ' ', y)
+        console.log('startx: ', line.x, 'startY: ', line.y, 'endX: ', line.x + txtWidth, 'endY: ', line.y - txtHeight);
         return (x > line.x && x < line.x + txtWidth) && (y < line.y && y > line.y - txtHeight);
     });
     if (lineIdx !== -1) gCurrMeme.focusLineIdx = lineIdx;

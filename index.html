@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body onload="onInit()" onmouseup="handleMouseUp()">
+<body onload="onInit()" onmouseup="handleMouseUp()" ontouchend="handleMouseUp()">
     <header class="main-header">
         <div class="header-container container">
             <div class="logo">
@@ -33,24 +33,6 @@
         <main class="main-content">
             <div class="gallerys">
                 <section class="container gallery grid">
-                    <!-- <img class="squre" src="img/1.jpg" onclick="openMemeEditor(1)">
-                    <img class="squre" src="img/2.jpg" onclick="openMemeEditor(2)">
-                    <img class="squre" src="img/3.jpg" onclick="openMemeEditor(3)">
-                    <img class="squre" src="img/4.jpg" onclick="openMemeEditor(4)">
-                    <img class="squre" src="img/5.jpg" onclick="openMemeEditor(5)">
-                    <img class="squre" src="img/6.jpg" onclick="openMemeEditor(6)">
-                    <img class="squre" src="img/7.jpg" onclick="openMemeEditor(7)">
-                    <img class="squre" src="img/8.jpg" onclick="openMemeEditor(8)">
-                    <img class="squre" src="img/9.jpg" onclick="openMemeEditor(9)">
-                    <img class="squre" src="img/10.jpg" onclick="openMemeEditor(10)">
-                    <img class="squre" src="img/11.jpg" onclick="openMemeEditor(11)">
-                    <img class="squre" src="img/12.jpg" onclick="openMemeEditor(12)">
-                    <img class="squre" src="img/13.jpg" onclick="openMemeEditor(13)">
-                    <img class="squre" src="img/14.jpg" onclick="openMemeEditor(14)">
-                    <img class="squre" src="img/15.jpg" onclick="openMemeEditor(15)">
-                    <img class="squre" src="img/16.jpg" onclick="openMemeEditor(16)">
-                    <img class="squre" src="img/17.jpg" onclick="openMemeEditor(17)">
-                    <img class="squre" src="img/18.jpg" onclick="openMemeEditor(18)"> -->
 
                 </section>
                 <section class="container memes-gallery grid">
@@ -59,12 +41,10 @@
             </div>
             <main class="meme-editor container">
                 <section class="canvas-container">
-                    <canvas id="my-canvas" height="450" width="450" onmousedown="checkFocus(event)" onmousemove="handleMove(event)"></canvas>
+                    <canvas id="my-canvas" height="450" width="450" onmousedown="checkFocus(event)" onmousemove="handleMove(event)" ontouchstart="checkFocus(event)" ontouchmove="handleMove(event)"></canvas>
                 </section>
                 <div class="control">
-                    <form class="text">
-                        <input onkeyup="onKeyUp(event)" id="text-input" type="text" placeholder="Write your MEME here!">
-                    </form>
+                    <input onkeyup="onKeyUp(event)" id="text-input" type="text" placeholder="Write your MEME here!">
 
                     <div class="add-delete">
                         <button class="focus-up" onclick="onChangeFocus()"><img src="icons/focus.png" ></button>

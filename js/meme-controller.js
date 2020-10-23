@@ -10,7 +10,7 @@ var gSearchTxt = '';
 
 
 function onInit() {
-    gCanvas = document.querySelector('#my-canvas');
+    gCanvas = document.querySelector('canvas');
     gCtx = gCanvas.getContext('2d');
     renderImgs();
 }
@@ -52,7 +52,6 @@ function drawText() {
         gCtx.fillText(line.txt, line.x, line.y);
         if (line.isStroke) gCtx.strokeText(line.txt, line.x, line.y);
     });
-    console.log('maybe here');
     const focusTxt = getTxtOnFocus();
     if (!focusTxt) return;
     document.querySelector('#text-input').value = focusTxt;
@@ -65,10 +64,15 @@ function onSubmitChanges() {
 }
 
 function onKeyUp(ev) {
-    ev.preventDefault();
+    // ev.preventDefault();
+    debugger
     if (ev.key === 'Backspace') {
         deleteLetter();
         renderMeme();
+        return;
+    }
+    if (ev.key === 'Enter') {
+        onSubmitChanges();
         return;
     }
     if (ev.key.length > 1) return;
@@ -120,7 +124,12 @@ function onChangeFocus() {
 }
 
 function handleMove(ev) {
+    ev.preventDefault();
     if (!gIsMove) return;
+    if (ev.touches) {
+
+    }
+    console.log('got here');
     changeMemesPos(ev.offsetX, ev.offsetY);
     renderMeme();
 }
@@ -128,6 +137,20 @@ function handleMove(ev) {
 function checkFocus(ev) {
     if (checkCurrFocusEmpty()) renderMeme();
     gIsMouseDown = true;
+    if (ev.touches) {
+        const rect = ev.target.getBoundingClientRect();
+        console.log('rect left: ', rect.left);
+        console.log('rect top: ', rect.top);
+        console.log('x touches: ', ev.targetTouches[0].pageX);
+        console.log('y touches: ', ev.targetTouches[0].pageY);
+        const x = ev.targetTouches[0].pageX - rect.left;
+        const y = ev.targetTouches[0].pageY - rect.top;
+        const idx = checkIfFocusOn(x, y);
+        if (idx === -1) return;
+        gIsMove = gIsMouseDown;
+        renderMeme();
+        return;
+    }
     const { offsetX, offsetY } = ev;
     const idx = checkIfFocusOn(offsetX, offsetY);
     if (idx === -1) return;
