@@ -63,13 +63,13 @@
                 </section>
                 <div class="control">
                     <form class="text">
-                        <input onkeydown="onKeyDown(event)" id="text-input" type="text" placeholder="Write your MEME here!">
+                        <input onkeyup="onKeyUp(event)" id="text-input" type="text" placeholder="Write your MEME here!">
                     </form>
 
                     <div class="add-delete">
                         <button class="focus-up" onclick="onChangeFocus()"><img src="icons/focus.png" ></button>
                         <button class="submit-btn" onclick="onSubmitChanges()"><img src="icons/add.png" ></button>
-                        <button class="delete-txt" onclick="onDeleteTxt()"><img src="icons/delete.png" ></button>
+                        <button class="delete-txt" onclick="onDeleteLine()"><img src="icons/delete.png" ></button>
                     </div>
 
                     <!-- <div class="move-btn">

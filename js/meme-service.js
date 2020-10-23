@@ -31,6 +31,16 @@ var gCurrMeme = {};
 var gNextIdx = 101;
 
 
+function createNewImage(url, id) {
+    gImgs.push({
+        id,
+        url,
+        keywords: []
+    });
+}
+
+
+
 function getImgUrlFromService(id) {
     const currImg = gImgs.find(img => img.id === id);
     return currImg.url;
@@ -39,7 +49,6 @@ function getImgUrlFromService(id) {
 function getFilteredImgs(searchTxt) {
     if (searchTxt === '') return gImgs;
     var imgs = [];
-    console.log(searchTxt);
     gImgs.forEach(img => {
         var idx = img.keywords.findIndex(keyword => keyword.includes(searchTxt))
         if (idx !== -1) imgs.push(img);
@@ -60,7 +69,6 @@ function getLinesFromService(idx = 101) {
 
 function addMemeTxt(txt) {
     if (!(gCurrMeme.lines[gCurrMeme.focusLineIdx])) {
-        console.log('first letter');
         gCurrMeme.lines.unshift(createNewLine(txt));
     } else {
         gCurrMeme.lines[gCurrMeme.focusLineIdx].txt += txt;
@@ -68,9 +76,11 @@ function addMemeTxt(txt) {
 }
 
 function addNewLine() {
+    console.log('is lines?:', gCurrMeme.lines[gCurrMeme.focusLineIdx]);
+    // console.log('is txt empty?:', (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === ''));
     if ((!gCurrMeme.lines[gCurrMeme.focusLineIdx]) || (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === '')) return -1;
     gCurrMeme.focusLineIdx++;
-    gCurrMeme.lines[gCurrMeme.focusLineIdx] = createNewLine('');
+    gCurrMeme.lines[gCurrMeme.focusLineIdx] = createNewLine('TEXT');
 }
 
 function getCurrMeme() {
@@ -88,12 +98,14 @@ function createMeme(selectedImgId = 1) {
 }
 
 function deleteLetter() {
+    if (!gCurrMeme.lines[gCurrMeme.focusLineIdx]) return;
+    console.log('not good if no focus');
     if ((gCurrMeme.lines[gCurrMeme.focusLineIdx].txt.length === 0) || !(gCurrMeme.lines[gCurrMeme.focusLineIdx].txt)) return
     gCurrMeme.lines[gCurrMeme.focusLineIdx].txt = gCurrMeme.lines[gCurrMeme.focusLineIdx].txt.slice(0, -1);
 }
 
 function addSearchWord(keyword) {
-    if (getFilteredImgs(keyword).length === 0) return;
+    if (getFilteredImgs(keyword).length < 3) return;
     if (!gKeywords[keyword]) {
         gKeywords[keyword] = 1;
     } else gKeywords[keyword]++;
@@ -141,8 +153,8 @@ function getFocusIdx() {
 
 function getFocusPosition() {
     const idx = getFocusIdx()
+    console.log('line focus idx: ', idx);
     if (gCurrMeme.lines.length === 0) return -1;
-    gCtx.font = `${gCurrMeme.lines[idx].size}px ${gCurrMeme.lines[idx].font}`;
     const focusPosition = {
         width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
         height: gCurrMeme.lines[idx].size,
@@ -177,8 +189,9 @@ function checkIfFocusOn(x, y) {
     return lineIdx;
 }
 
-function deletetxt() {
+function deleteLine() {
     gCurrMeme.lines.splice(gCurrMeme.focusLineIdx, 1);
+    if (gCurrMeme.lines.length !== 0) gCurrMeme.focusLineIdx--;
 }
 
 
@@ -200,11 +213,19 @@ function loadMemes() {
 }
 
 function getTxtOnFocus() {
+    if (!gCurrMeme.lines[gCurrMeme.focusLineIdx]) return (!gCurrMeme.lines[gCurrMeme.lines.length - 1].txt);
     return gCurrMeme.lines[gCurrMeme.focusLineIdx].txt;
 }
 
 function changeMemeFontColor(color, font) {
     gCurrMeme.lines[gCurrMeme.focusLineIdx].color = color;
     gCurrMeme.lines[gCurrMeme.focusLineIdx].font = font;
+}
 
+function checkCurrFocusEmpty() {
+    if (!gCurrMeme.lines[gCurrMeme.focusLineIdx]) return;
+    if (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === '') {
+        deleteLine();
+        return true;
+    } else return false;
 }
