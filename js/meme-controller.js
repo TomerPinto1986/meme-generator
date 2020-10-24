@@ -11,17 +11,6 @@ var gIsMobile = false;
 
 
 function onInit() {
-    console.log(window.innerWidth);
-    if (window.innerWidth > 500) {
-        gCanvas = document.querySelector('#my-canvas');
-        gCtx = gCanvas.getContext('2d');
-        gIsMobile = false;
-    } else {
-        gCanvas = document.querySelector('#mobile-canvas');
-        gCtx = gCanvas.getContext('2d');
-        gIsMobile = true;
-    }
-
     renderImgs();
 }
 
@@ -44,6 +33,16 @@ function openMemeEditor(imgId) {
     document.querySelector('.main-content .gallery').style.display = 'none';
     document.querySelector('.main-container .filter').style.display = 'none';
     document.querySelector('.meme-editor').style.display = 'flex';
+    console.log(document.querySelector('.canvas-container').getBoundingClientRect().width);
+    if (document.querySelector('.canvas-container').getBoundingClientRect().width > 400) {
+        gCanvas = document.querySelector('#my-canvas');
+        gCtx = gCanvas.getContext('2d');
+        gIsMobile = false;
+    } else {
+        gCanvas = document.querySelector('#mobile-canvas');
+        gCtx = gCanvas.getContext('2d');
+        gIsMobile = true;
+    }
     createMeme(imgId);
     const imgUrl = getImgUrlFromService(imgId);
     drawImg(imgUrl);

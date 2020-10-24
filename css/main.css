@@ -336,4 +336,7 @@ footer {
         padding-inline-start: 0px;
         margin: 0;
     }
+    .canvas-container {
+        width: 300px;
+    }
 }
