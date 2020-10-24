@@ -308,7 +308,21 @@ footer {
     stroke: #FFF;
 }
 
+#my-canvas {
+    display: block;
+}
+
+#mobile-canvas {
+    display: none;
+}
+
 @media (max-width:600px) {
+    #my-canvas {
+        display: none;
+    }
+    #mobile-canvas {
+        display: block;
+    }
     main .meme-editor {
         flex-direction: column;
         align-items: center;

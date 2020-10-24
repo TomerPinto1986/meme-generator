@@ -7,11 +7,21 @@ var gCtx;
 var gIsMouseDown = false;
 var gIsMove = false;
 var gSearchTxt = '';
+var gIsMobile = false;
 
 
 function onInit() {
-    gCanvas = document.querySelector('canvas');
-    gCtx = gCanvas.getContext('2d');
+    console.log(window.innerWidth);
+    if (window.innerWidth > 500) {
+        gCanvas = document.querySelector('#my-canvas');
+        gCtx = gCanvas.getContext('2d');
+        gIsMobile = false;
+    } else {
+        gCanvas = document.querySelector('#mobile-canvas');
+        gCtx = gCanvas.getContext('2d');
+        gIsMobile = true;
+    }
+
     renderImgs();
 }
 

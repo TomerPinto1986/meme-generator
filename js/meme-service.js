@@ -114,17 +114,23 @@ function addSearchWord(keyword) {
 
 
 function createNewLine(txt) {
+    let deltaX = 0;
+    let deltaY = 0;
+    if (gIsMobile) {
+        deltaX = -70;
+        deltaY = -100;
+    }
     let posX = 0;
     let posY = 0;
     if (gCurrMeme.lines.length === 0) {
-        posX = 170;
-        posY = 70;
+        posX = 170 + deltaX;
+        posY = 70 + deltaY * 0.2;
     } else if (gCurrMeme.lines.length === 1) {
-        posX = 170;
-        posY = 420;
+        posX = 170 + deltaX;
+        posY = 410 + deltaY * 1.2;
     } else {
-        posX = 170;
-        posY = 240;
+        posX = 170 + deltaX;
+        posY = 230 + deltaY / 2;
     }
 
     return {
