@@ -76,12 +76,6 @@ function addMemeTxt(txt) {
 }
 
 function addNewLine() {
-    console.log('is lines?:', gCurrMeme.lines[gCurrMeme.focusLineIdx]);
-    // if (isMobile) {
-    //     if (txt === '') return;
-    //     else createNewLine(txt);
-    // }
-    // console.log('is txt empty?:', (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === ''));
     if ((!gCurrMeme.lines[gCurrMeme.focusLineIdx]) || (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === '')) return -1;
     gCurrMeme.focusLineIdx++;
     gCurrMeme.lines[gCurrMeme.focusLineIdx] = createNewLine('');
@@ -109,11 +103,18 @@ function deleteLetter() {
 }
 
 function addSearchWord(keyword) {
-    if (getFilteredImgs(keyword).length < 3) return;
+    console.log('here');
+    gKeywords = loadFromStorage(KEYWORDS_KEY);
+    if (getFilteredImgs(keyword).length < 1) return;
     if (!gKeywords[keyword]) {
         gKeywords[keyword] = 1;
     } else gKeywords[keyword]++;
+    console.log(gKeywords);
     saveToStorage(KEYWORDS_KEY, gKeywords);
+}
+
+function getKeywords() {
+    return loadFromStorage(KEYWORDS_KEY);
 }
 
 

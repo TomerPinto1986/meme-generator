@@ -14,11 +14,39 @@ function onInit() {
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     renderImgs();
+    renderKeywords();
+}
+
+function renderKeywords() {
+    const keyWords = getKeywords();
+    let strHtml = '';
+    for (const key in keyWords) {
+        if (keyWords[key] < 10) {
+            var size = keyWords[key] * 3.5;
+        } else size = 30;
+        strHtml += `<li onclick="filterByKeyword('${key}')" style="font-size:${size}px;">${key}</li>`;
+    }
+    document.querySelector('.filter-options ul').innerHTML = strHtml;
+}
+
+function filterByKeyword(txt) {
+    const elKeywords = document.querySelectorAll('.filter-options li');
+    elKeywords.forEach(keyword => {
+        if (keyword.innerText === txt) {
+            console.log(keyword.style.fontSize);
+            let wordFontSize = +keyword.style.fontSize.slice(0, 2);
+            console.log(wordFontSize);
+            if (wordFontSize < 50) wordFontSize += 2;
+            keyword.style.fontSize = wordFontSize + 'px';
+        }
+    });
+    gSearchTxt = txt;
+    renderImgs();
 }
 
 function renderImgs() {
     const imgs = getFilteredImgs(gSearchTxt);
-    var strHtml = '';
+    let strHtml = '';
     imgs.forEach((img, idx) => {
         strHtml += `<img class="squre" src="${img.url}" onclick="openMemeEditor(${idx+1})">`
     });

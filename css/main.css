@@ -116,7 +116,7 @@ header button {
     padding: 10px 20px;
 }
 
-.filter-container>* {
+.filter-container {
     width: 980px;
     display: flex;
     justify-content: space-between;
@@ -217,6 +217,17 @@ header li:hover {
 
 .filter input:focus {
     outline: none;
+}
+
+.filter-options li {
+    color: black;
+    line-height: 1;
+}
+
+.filter-options ul {
+    display: flex;
+    align-items: baseline;
+    height: 30px;
 }
 
 #toggle-color {
