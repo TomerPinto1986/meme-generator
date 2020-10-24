@@ -11,6 +11,8 @@ var gIsMobile = false;
 
 
 function onInit() {
+    gCanvas = document.querySelector('#my-canvas');
+    gCtx = gCanvas.getContext('2d');
     renderImgs();
 }
 
@@ -34,13 +36,11 @@ function openMemeEditor(imgId) {
     document.querySelector('.main-container .filter').style.display = 'none';
     document.querySelector('.meme-editor').style.display = 'flex';
     console.log(document.querySelector('.canvas-container').getBoundingClientRect().width);
-    if (document.querySelector('.canvas-container').getBoundingClientRect().width > 400) {
-        gCanvas = document.querySelector('#my-canvas');
-        gCtx = gCanvas.getContext('2d');
-        gIsMobile = false;
-    } else {
-        gCanvas = document.querySelector('#mobile-canvas');
-        gCtx = gCanvas.getContext('2d');
+    if (document.querySelector('.canvas-container').getBoundingClientRect().width < 500) {
+        console.log(gCanvas);
+        gCanvas.width = 300;
+        gCanvas.height = 300;
+        console.log('sucsses?');
         gIsMobile = true;
     }
     createMeme(imgId);
@@ -135,11 +135,17 @@ function handleMove(ev) {
     ev.preventDefault();
     if (!gIsMove) return;
     if (ev.touches) {
-
+        console.log('touch moveeee');
+        const rect = ev.target.getBoundingClientRect();
+        const x = ev.targetTouches[0].pageX - rect.left;
+        const y = ev.targetTouches[0].pageY - rect.top;
+        changeMemesPos(x, y);
+        renderMeme();
+    } else {
+        console.log('got here');
+        changeMemesPos(ev.offsetX, ev.offsetY);
+        renderMeme();
     }
-    console.log('got here');
-    changeMemesPos(ev.offsetX, ev.offsetY);
-    renderMeme();
 }
 
 function checkFocus(ev) {
