@@ -71,7 +71,7 @@ function addMemeTxt(txt) {
     if (!(gCurrMeme.lines[gCurrMeme.focusLineIdx])) {
         gCurrMeme.lines.unshift(createNewLine(txt));
     } else {
-        gCurrMeme.lines[gCurrMeme.focusLineIdx].txt += txt;
+        gCurrMeme.lines[gCurrMeme.focusLineIdx].txt = txt;
     }
 }
 
@@ -162,7 +162,8 @@ function getFocusIdx() {
 }
 
 function getFocusPosition() {
-    const idx = getFocusIdx()
+    const idx = getFocusIdx();
+    console.log(idx, ' index line focus');
     if (gCurrMeme.lines.length === 0) return -1;
     const focusPosition = {
         width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
@@ -192,8 +193,8 @@ function checkIfFocusOn(x, y) {
     const lineIdx = lines.findIndex(line => {
         const txtWidth = gCtx.measureText(line.txt).width;
         const txtHeight = line.size;
-        console.log('current x y: ', x, ' ', y)
-        console.log('startx: ', line.x, 'startY: ', line.y, 'endX: ', line.x + txtWidth, 'endY: ', line.y - txtHeight);
+        // console.log('current x y: ', x, ' ', y)
+        // console.log('startx: ', line.x, 'startY: ', line.y, 'endX: ', line.x + txtWidth, 'endY: ', line.y - txtHeight);
         return (x > line.x && x < line.x + txtWidth) && (y < line.y && y > line.y - txtHeight);
     });
     if (lineIdx !== -1) gCurrMeme.focusLineIdx = lineIdx;
@@ -203,7 +204,12 @@ function checkIfFocusOn(x, y) {
 function deleteLine() {
     gCurrMeme.lines.splice(gCurrMeme.focusLineIdx, 1);
     if (gCurrMeme.lines.length !== 0) {
-        gCurrMeme.focusLineIdx = (gCurrMeme.focusLineIdx === 0) ? 0 : gCurrMeme.focusLineIdx--;
+        debugger;
+        if (gCurrMeme.focusLineIdx === 0) {
+            gCurrMeme.focusLineIdx = 0;
+        } else gCurrMeme.focusLineIdx--;
+        console.log(gCurrMeme.focusLineIdx === 0);
+        console.log(gCurrMeme.focusLineIdx);
     }
 
 }

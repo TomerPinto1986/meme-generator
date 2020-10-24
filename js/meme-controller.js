@@ -51,7 +51,7 @@ function openMemeEditor(imgId) {
 function drawText() {
     const lines = getLinesFromService();
     if (lines.length === 0) {
-        document.querySelector('#text-input').value = 'TEXT';
+        document.querySelector('#text-input').value = '';
         return;
     }
     lines.forEach(line => {
@@ -72,20 +72,10 @@ function onSubmitChanges() {
     renderMeme();
 }
 
-function onKeyUp(ev) {
-    // ev.preventDefault();
-    if (ev.key === 'Backspace') {
-        deleteLetter();
-        renderMeme();
-        return;
-    }
-    if (ev.key === 'Enter') {
-        onSubmitChanges();
-        return;
-    }
-    if (ev.key.length > 1) return;
-    const txt = ev.key;
-    addMemeTxt(txt);
+function onKeyUp(el) {
+    console.log(el.value);
+    // debugger
+    addMemeTxt(el.value);
     renderMeme();
 }
 
