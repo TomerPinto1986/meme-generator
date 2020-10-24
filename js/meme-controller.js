@@ -67,8 +67,8 @@ function drawText() {
 }
 
 function onSubmitChanges() {
-    const txt = document.querySelector('#text-input').value;
-    if (addNewLine(gIsMobile, txt) === -1) return;
+    if (addNewLine() === -1) return;
+    document.querySelector('#text-input').value = '';
     renderMeme();
 }
 
@@ -160,6 +160,10 @@ function checkFocus(ev) {
     if (idx === -1) return;
     gIsMove = gIsMouseDown;
     renderMeme();
+}
+
+function toggleMenu() {
+    document.body.classList.toggle('menu-open');
 }
 
 

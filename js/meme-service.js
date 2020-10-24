@@ -75,16 +75,16 @@ function addMemeTxt(txt) {
     }
 }
 
-function addNewLine(isMobile, txt) {
+function addNewLine() {
     console.log('is lines?:', gCurrMeme.lines[gCurrMeme.focusLineIdx]);
-    if (isMobile) {
-        if (txt === '') return;
-        else createNewLine(txt);
-    }
+    // if (isMobile) {
+    //     if (txt === '') return;
+    //     else createNewLine(txt);
+    // }
     // console.log('is txt empty?:', (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === ''));
     if ((!gCurrMeme.lines[gCurrMeme.focusLineIdx]) || (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === '')) return -1;
     gCurrMeme.focusLineIdx++;
-    gCurrMeme.lines[gCurrMeme.focusLineIdx] = createNewLine('TEXT');
+    gCurrMeme.lines[gCurrMeme.focusLineIdx] = createNewLine('');
 }
 
 function getCurrMeme() {
@@ -178,8 +178,10 @@ function getFocusPosition() {
 }
 
 function changeMemesPos(x, y) {
-    gCurrMeme.lines[gCurrMeme.focusLineIdx].x = x;
-    gCurrMeme.lines[gCurrMeme.focusLineIdx].y = y;
+    const width = gCtx.measureText(gCurrMeme.lines[gCurrMeme.focusLineIdx].txt).width + 10;
+    const height = gCurrMeme.lines[gCurrMeme.focusLineIdx].size;
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].x = x - width / 2;
+    gCurrMeme.lines[gCurrMeme.focusLineIdx].y = y + height / 2;
 }
 
 function changeFocus() {
