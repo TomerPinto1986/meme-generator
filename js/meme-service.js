@@ -192,7 +192,10 @@ function checkIfFocusOn(x, y) {
 
 function deleteLine() {
     gCurrMeme.lines.splice(gCurrMeme.focusLineIdx, 1);
-    if (gCurrMeme.lines.length !== 0) gCurrMeme.focusLineIdx--;
+    if (gCurrMeme.lines.length !== 0) {
+        gCurrMeme.focusLineIdx = (gCurrMeme.focusLineIdx === 0) ? 0 : gCurrMeme.focusLineIdx--;
+    }
+
 }
 
 

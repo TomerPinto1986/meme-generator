@@ -65,7 +65,6 @@ function onSubmitChanges() {
 
 function onKeyUp(ev) {
     // ev.preventDefault();
-    debugger
     if (ev.key === 'Backspace') {
         deleteLetter();
         renderMeme();
