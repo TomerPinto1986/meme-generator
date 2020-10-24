@@ -75,8 +75,12 @@ function addMemeTxt(txt) {
     }
 }
 
-function addNewLine() {
+function addNewLine(isMobile, txt) {
     console.log('is lines?:', gCurrMeme.lines[gCurrMeme.focusLineIdx]);
+    if (isMobile) {
+        if (txt === '') return;
+        else createNewLine(txt);
+    }
     // console.log('is txt empty?:', (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === ''));
     if ((!gCurrMeme.lines[gCurrMeme.focusLineIdx]) || (gCurrMeme.lines[gCurrMeme.focusLineIdx].txt === '')) return -1;
     gCurrMeme.focusLineIdx++;

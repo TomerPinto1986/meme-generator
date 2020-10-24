@@ -67,8 +67,8 @@ function drawText() {
 }
 
 function onSubmitChanges() {
-    console.log('add line');
-    if (addNewLine() === -1) return;
+    const txt = document.querySelector('#text-input').value;
+    if (addNewLine(gIsMobile, txt) === -1) return;
     renderMeme();
 }
 
