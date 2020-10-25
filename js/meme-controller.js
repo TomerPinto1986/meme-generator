@@ -297,9 +297,8 @@ function onDownloadMeme(elLink) {
 
 
 function onSaveMeme(elLink) {
-    // gIsSaveMode = true;
-    // renderMeme();
     const imgData = gCanvas.toDataURL('image/png');
+    console.log(imgData);
     saveMeme(imgData)
 }
 

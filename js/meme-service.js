@@ -3,7 +3,7 @@ console.log('hello service!');
 
 const MEMES_KEY = 'memes';
 const KEYWORDS_KEY = 'keywords'
-const gMemes = loadFromStorage(MEMES_KEY);
+var gMemes = loadFromStorage(MEMES_KEY);
 var gKeywords = { baby: 3, america: 4, movie: 3.5 };
 
 const gImgs = [
@@ -228,6 +228,7 @@ function strokeTxt() {
 }
 
 function saveMeme(imgData) {
+    if (!gMemes) gMemes = [];
     gMemes.push(imgData);
     saveToStorage(MEMES_KEY, gMemes);
 }
