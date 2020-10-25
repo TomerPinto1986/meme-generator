@@ -155,6 +155,7 @@ function onChangeFocus() {
 
 function handleMove(ev) {
     ev.preventDefault();
+    console.log(gIsMove);
     if (!gIsMove) return;
     if (ev.touches) {
         console.log('touch moveeee');
@@ -172,6 +173,7 @@ function handleMove(ev) {
 
 function checkFocus(ev) {
     if (checkCurrFocusEmpty()) renderMeme();
+    gIsMouseDown = true;
     if (ev.touches) {
         const rect = ev.target.getBoundingClientRect();
         console.log('rect left: ', rect.left);
@@ -197,6 +199,7 @@ function checkFocus(ev) {
         renderMeme();
         return;
     }
+    console.log(gIsMouseDown);
     gIsMove = gIsMouseDown;
     renderMeme();
 }
