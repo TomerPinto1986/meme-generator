@@ -4,7 +4,7 @@ console.log('hello service!');
 const MEMES_KEY = 'memes';
 const KEYWORDS_KEY = 'keywords'
 var gMemes = loadFromStorage(MEMES_KEY);
-var gKeywords = { baby: 3, america: 4, movie: 3.5 };
+var gKeywords = { baby: 5, america: 10, movie: 7 };
 
 const gImgs = [
     { id: 1, url: './img/1.jpg', keywords: ['leader', 'politics', 'america', 'determine', 'blonde', 'hair', 'suit', 'poining'] },
@@ -91,7 +91,13 @@ function createMeme(selectedImgId = 1) {
         idx: gNextIdx++,
         selectedImgId,
         lines: [],
-        focusLineIdx: 0
+        focusLineIdx: 0,
+        isSaved: false
+    }
+
+    if (gMemes) {
+        if (gMemes.length === 0) return;
+        gCurrMeme.idx = gMemes[gMemes.length - 1].idx + 1;
     }
 }
 
@@ -116,7 +122,13 @@ function addSearchWord(keyword) {
     saveToStorage(KEYWORDS_KEY, gKeywords);
 }
 
+function updateKeywords(txt, fontSize) {
+    gKeywords[txt] = fontSize / 2;
+    saveToStorage(KEYWORDS_KEY, gKeywords);
+}
+
 function getKeywords() {
+    gKeywords = loadFromStorage(KEYWORDS_KEY) ? loadFromStorage(KEYWORDS_KEY) : gKeywords;
     return gKeywords;
 }
 
@@ -167,16 +179,20 @@ function getFocusIdx() {
 
 function getFocusPosition() {
     const idx = getFocusIdx();
-    if (gCurrMeme.lines.length === 0) return -1;
+    const lines = gCurrMeme.lines;
+    console.log(lines);
+    if (lines.length === 0) return -1;
+    gCtx.font = `${lines[idx].size}px ${lines[idx].font}`;
+    console.log(gCtx.font);
     const focusPosition = {
-        width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
-        height: gCurrMeme.lines[idx].size,
-        startX: gCurrMeme.lines[idx].x - 5,
-        startY: gCurrMeme.lines[idx].y + 5
+        width: gCtx.measureText(lines[idx].txt).width + 10,
+        height: lines[idx].size - 0.05 * lines[idx].size,
+        startX: lines[idx].x - 5,
+        startY: lines[idx].y + 5
     }
-    if (gCurrMeme.lines[idx].align === 'center') {
+    if (lines[idx].align === 'center') {
         focusPosition.startX = focusPosition.startX - (0.5 * focusPosition.width) + 5;
-    } else if (gCurrMeme.lines[idx].align === 'right') focusPosition.startX = focusPosition.startX - (focusPosition.width) + 5;
+    } else if (lines[idx].align === 'right') focusPosition.startX = focusPosition.startX - (focusPosition.width) + 5;
     return focusPosition
 }
 
@@ -227,10 +243,23 @@ function strokeTxt() {
     gCurrMeme.lines[gCurrMeme.focusLineIdx].isStroke = !gCurrMeme.lines[gCurrMeme.focusLineIdx].isStroke;
 }
 
-function saveMeme(imgData) {
-    if (!gMemes) gMemes = [];
-    gMemes.push(imgData);
-    saveToStorage(MEMES_KEY, gMemes);
+function saveMeme(currImgData) {
+    if (gCurrMeme.isSaved === true) {
+        gCurrMeme.imgData = currImgData;
+        const memeIdx = gMemes.findIndex(meme => meme.idx === gCurrMeme.idx);
+        gMemes[memeIdx] = gCurrMeme;
+        console.log(memeIdx);
+        console.log(gMemes);
+        saveToStorage(MEMES_KEY, gMemes);
+
+    } else {
+        console.log(gMemes);
+        gCurrMeme.imgData = currImgData;
+        if (!gMemes) gMemes = [];
+        gMemes.push(gCurrMeme);
+        saveToStorage(MEMES_KEY, gMemes);
+        gCurrMeme.isSaved = true;
+    }
 }
 
 function loadMemes() {
@@ -253,4 +282,11 @@ function checkCurrFocusEmpty() {
         deleteLine();
         return true;
     } else return false;
+}
+
+
+function deleteMeme(idx) {
+    const memeIdx = gMemes.findIndex(meme => (meme.idx === idx));
+    gMemes.splice(memeIdx, 1);
+    saveToStorage(MEMES_KEY, gMemes);
 }

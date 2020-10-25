@@ -2,7 +2,7 @@
 console.log('hello controller!');
 
 
-var gCanvas;
+var gElCanvas;
 var gCtx;
 var gIsMouseDown = false;
 var gIsMove = false;
@@ -12,8 +12,8 @@ var gIsSaveMode = false;
 
 
 function onInit() {
-    gCanvas = document.querySelector('#my-canvas');
-    gCtx = gCanvas.getContext('2d');
+    gElCanvas = document.querySelector('.canvas-container canvas');
+    gCtx = gElCanvas.getContext('2d');
     renderImgs();
     renderKeywords();
 }
@@ -23,7 +23,7 @@ function renderKeywords() {
     let strHtml = '';
     for (const key in keyWords) {
         if (keyWords[key] < 10) {
-            var size = keyWords[key] * 3.5;
+            var size = keyWords[key] * 2;
         } else size = 30;
         strHtml += `<li onclick="filterByKeyword('${key}')" style="font-size:${size}px;">${key}</li>`;
     }
@@ -34,13 +34,14 @@ function filterByKeyword(txt) {
     const elKeywords = document.querySelectorAll('.filter-options li');
     elKeywords.forEach(keyword => {
         if (keyword.innerText === txt) {
-            console.log(keyword.style.fontSize);
-            let wordFontSize = +keyword.style.fontSize.slice(0, 2);
+            let wordFontSize = +keyword.style.fontSize.split('p')[0];
             console.log(wordFontSize);
             if (wordFontSize < 50) wordFontSize += 2;
             keyword.style.fontSize = wordFontSize + 'px';
+            updateKeywords(txt, wordFontSize);
         }
     });
+
     gSearchTxt = txt;
     renderImgs();
 }
@@ -48,8 +49,8 @@ function filterByKeyword(txt) {
 function renderImgs() {
     const imgs = getFilteredImgs(gSearchTxt);
     let strHtml = '';
-    imgs.forEach((img, idx) => {
-        strHtml += `<img class="squre" src="${img.url}" onclick="openMemeEditor(${idx+1})">`
+    imgs.forEach(img => {
+        strHtml += `<img class="squre" src="${img.url}" onclick="openMemeEditor(${img.id})">`
     });
     document.querySelector('.gallery').innerHTML = strHtml;
 }
@@ -65,21 +66,22 @@ function openMemeEditor(imgId) {
     document.querySelector('.main-container .filter').style.display = 'none';
     document.querySelector('.meme-editor').style.display = 'flex';
     if (document.querySelector('.canvas-container').getBoundingClientRect().width < 500) {
-        console.log(gCanvas);
-        gCanvas.width = 300;
-        gCanvas.height = 300;
+        console.log(gElCanvas);
+        gElCanvas.width = 300;
+        gElCanvas.height = 300;
         console.log('sucsses?');
         gIsMobile = true;
     }
     createMeme(imgId);
     const imgUrl = getImgUrlFromService(imgId);
     drawImg(imgUrl);
+    putFocusOninput();
 }
 
 function drawText() {
     const lines = getLinesFromService();
     if (lines.length === 0) {
-        document.querySelector('#text-input').value = '';
+        document.querySelector('.control .txt-input').value = '';
         return;
     }
     lines.forEach(line => {
@@ -91,13 +93,18 @@ function drawText() {
     });
     const focusTxt = getTxtOnFocus();
     if (!focusTxt) return;
-    document.querySelector('#text-input').value = focusTxt;
+    document.querySelector('.control .txt-input').value = focusTxt;
 }
 
 function onSubmitChanges() {
     if (addNewLine() === -1) return;
-    document.querySelector('#text-input').value = '';
+    document.querySelector('.control .txt-input').value = '';
     renderMeme();
+    putFocusOninput();
+}
+
+function putFocusOninput() {
+    document.querySelector('.control input').focus();
 }
 
 function onKeyUp(el) {
@@ -107,8 +114,8 @@ function onKeyUp(el) {
 
 function onColorFontSubmit(ev) {
     ev.preventDefault();
-    const color = document.querySelector('#toggle-color').value;
-    const font = document.querySelector('#font-select').value;
+    const color = document.querySelector('.control .color').value;
+    const font = document.querySelector('.control .color-palete').value;
     changeMemeFontColor(color, font);
     renderMeme();
 }
@@ -119,7 +126,7 @@ function drawImg(imgUrl) {
     const img = new Image()
     img.src = imgUrl;
     img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height);
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height);
         drawText();
         putFocus();
     }
@@ -128,9 +135,7 @@ function drawImg(imgUrl) {
 function putFocus() {
     const focusPos = getFocusPosition();
     if (focusPos === -1) return;
-    console.log(gIsSaveMode);
     if (!gIsSaveMode) {
-        console.log(gIsSaveMode);
         drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
         return;
     }
@@ -150,12 +155,12 @@ function onTxtMove(delta) {
 function onChangeFocus() {
     changeFocus();
     renderMeme();
+    putFocusOninput();
 
 }
 
 function handleMove(ev) {
     ev.preventDefault();
-    console.log(gIsMove);
     if (!gIsMove) return;
     if (ev.touches) {
         console.log('touch moveeee');
@@ -243,31 +248,31 @@ function onMemesOpen() {
     const elGallery = document.querySelector('.main-container .memes-gallery');
     elGallery.style.display = 'grid';
     const memes = loadMemes();
+    if (!memes) return;
     elGallery.innerHTML = '';
     memes.forEach(meme => {
         var image = new Image();
-        image.src = meme;
+        image.src = meme.imgData;
         elGallery.appendChild(image);
 
     });
     const elMemes = elGallery.querySelectorAll('img');
-    console.log(elMemes);
-    elMemes.forEach((meme, idx) => {
-        meme.classList.add(`meme${idx}`);
-        meme.onclick = function showMeme() {
+    elMemes.forEach((elMeme, idx) => {
+        elMeme.classList.add(`meme${idx}`);
+        elMeme.onclick = function showMeme() {
             document.querySelector('.main-content .gallery').style.display = 'none';
             document.querySelector('.main-container .filter').style.display = 'none';
             document.querySelector('.main-container .memes-gallery').style.display = 'none';
-            var elMemeEditor = document.querySelector('.meme-editor');
-            elMemeEditor.style.display = 'flex';
-            console.log(meme.src.split(',')[1]);
-            createNewImage(meme.src, `meme${idx}`)
-            createMeme(`meme${idx}`)
-            gCtx.drawImage(meme, 0, 0, gCanvas.width, gCanvas.height);
+            document.querySelector('.meme-editor').style.display = 'flex';
+            document.querySelector('.download-save a:last-child').style.display = 'block';
+            gCurrMeme = loadMemes()[idx];
+            drawImg(gCurrMeme.imgData);
+            putFocusOninput();
         }
-
     });
 }
+
+
 
 
 function drawRect(width, height, x, y) {
@@ -280,6 +285,7 @@ function drawRect(width, height, x, y) {
 function onDeleteLine() {
     deleteLine();
     renderMeme();
+    putFocusOninput();
 }
 
 function onStroke() {
@@ -288,22 +294,33 @@ function onStroke() {
 }
 
 function onDownloadMeme(elLink) {
-    // gIsSaveMode = true;
-    // renderMeme();
-    const data = gCanvas.toDataURL()
+
+    const data = gElCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'meme.jpg'
 }
 
 
-function onSaveMeme(elLink) {
-    const imgData = gCanvas.toDataURL('image/png');
-    console.log(imgData);
+function onSaveMeme() {
+    const imgData = gElCanvas.toDataURL('image/png');
     saveMeme(imgData)
+    openGallery()
 }
 
+function onDeleteMeme() {
+    deleteMeme(gCurrMeme.idx);
+    openGallery()
 
+}
 
+function openGallery() {
+    document.querySelector('.main-content .gallery').style.display = 'grid';
+    document.querySelector('.main-container .filter').style.display = 'flex';
+    document.querySelector('.meme-editor').style.display = 'none';
+    document.querySelector('.main-content .memes-gallery').style.display = 'none';
+    renderKeywords();
+    renderImgs();
+}
 
 
 
