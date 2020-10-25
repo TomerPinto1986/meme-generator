@@ -164,7 +164,6 @@ function getFocusIdx() {
 
 function getFocusPosition() {
     const idx = getFocusIdx();
-    console.log(idx, ' index line focus');
     if (gCurrMeme.lines.length === 0) return -1;
     const focusPosition = {
         width: gCtx.measureText(gCurrMeme.lines[idx].txt).width + 10,
@@ -207,7 +206,6 @@ function checkIfFocusOn(x, y) {
 function deleteLine() {
     gCurrMeme.lines.splice(gCurrMeme.focusLineIdx, 1);
     if (gCurrMeme.lines.length !== 0) {
-        debugger;
         if (gCurrMeme.focusLineIdx === 0) {
             gCurrMeme.focusLineIdx = 0;
         } else gCurrMeme.focusLineIdx--;

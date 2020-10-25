@@ -8,6 +8,7 @@ var gIsMouseDown = false;
 var gIsMove = false;
 var gSearchTxt = '';
 var gIsMobile = false;
+var gIsSaveMode = false;
 
 
 function onInit() {
@@ -63,7 +64,6 @@ function openMemeEditor(imgId) {
     document.querySelector('.main-content .gallery').style.display = 'none';
     document.querySelector('.main-container .filter').style.display = 'none';
     document.querySelector('.meme-editor').style.display = 'flex';
-    console.log(document.querySelector('.canvas-container').getBoundingClientRect().width);
     if (document.querySelector('.canvas-container').getBoundingClientRect().width < 500) {
         console.log(gCanvas);
         gCanvas.width = 300;
@@ -101,8 +101,6 @@ function onSubmitChanges() {
 }
 
 function onKeyUp(el) {
-    console.log(el.value);
-    // debugger
     addMemeTxt(el.value);
     renderMeme();
 }
@@ -130,7 +128,13 @@ function drawImg(imgUrl) {
 function putFocus() {
     const focusPos = getFocusPosition();
     if (focusPos === -1) return;
-    drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
+    console.log(gIsSaveMode);
+    if (!gIsSaveMode) {
+        console.log(gIsSaveMode);
+        drawRect(focusPos.width, focusPos.height, focusPos.startX, focusPos.startY);
+        return;
+    }
+    gIsSaveMode = false;
 }
 
 function onSizeChange(delta) {
@@ -168,7 +172,6 @@ function handleMove(ev) {
 
 function checkFocus(ev) {
     if (checkCurrFocusEmpty()) renderMeme();
-    gIsMouseDown = true;
     if (ev.touches) {
         const rect = ev.target.getBoundingClientRect();
         console.log('rect left: ', rect.left);
@@ -178,14 +181,22 @@ function checkFocus(ev) {
         const x = ev.targetTouches[0].pageX - rect.left;
         const y = ev.targetTouches[0].pageY - rect.top;
         const idx = checkIfFocusOn(x, y);
-        if (idx === -1) return;
+        if (idx === -1) {
+            gIsSaveMode = true;
+            renderMeme();
+            return;
+        }
         gIsMove = gIsMouseDown;
         renderMeme();
         return;
     }
     const { offsetX, offsetY } = ev;
     const idx = checkIfFocusOn(offsetX, offsetY);
-    if (idx === -1) return;
+    if (idx === -1) {
+        gIsSaveMode = true;
+        renderMeme();
+        return;
+    }
     gIsMove = gIsMouseDown;
     renderMeme();
 }
@@ -274,6 +285,8 @@ function onStroke() {
 }
 
 function onDownloadMeme(elLink) {
+    // gIsSaveMode = true;
+    // renderMeme();
     const data = gCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'meme.jpg'
@@ -281,6 +294,8 @@ function onDownloadMeme(elLink) {
 
 
 function onSaveMeme(elLink) {
+    // gIsSaveMode = true;
+    // renderMeme();
     const imgData = gCanvas.toDataURL('image/png');
     saveMeme(imgData)
 }
