@@ -4,7 +4,7 @@ console.log('hello service!');
 const MEMES_KEY = 'memes';
 const KEYWORDS_KEY = 'keywords'
 const gMemes = loadFromStorage(MEMES_KEY);
-var gKeywords = {};
+var gKeywords = { baby: 3, america: 4, movie: 3.5 };
 
 const gImgs = [
     { id: 1, url: './img/1.jpg', keywords: ['leader', 'politics', 'america', 'determine', 'blonde', 'hair', 'suit', 'poining'] },
@@ -104,7 +104,10 @@ function deleteLetter() {
 
 function addSearchWord(keyword) {
     console.log('here');
-    gKeywords = loadFromStorage(KEYWORDS_KEY);
+    const keywords = loadFromStorage(KEYWORDS_KEY);
+    if (keywords) {
+        gKeywords = keywords;
+    }
     if (getFilteredImgs(keyword).length < 1) return;
     if (!gKeywords[keyword]) {
         gKeywords[keyword] = 1;
@@ -114,7 +117,7 @@ function addSearchWord(keyword) {
 }
 
 function getKeywords() {
-    return loadFromStorage(KEYWORDS_KEY);
+    return gKeywords;
 }
 
 
